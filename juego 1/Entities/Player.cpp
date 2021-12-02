@@ -11,11 +11,11 @@ Player::~Player()
 {
 }
 
-void Player::MoveX(float axis) {
-	Vec.x = axis * 3;
+void Player::MoveX(float multiplier) {
+	Vec.x = multiplier * m_maxSpeed;
 }
-void Player::MoveY(float axis) {
-	Vec.y = axis * 3;
+void Player::MoveY(float multiplier) {
+	Vec.y = multiplier * m_maxSpeed;
 }
 
 void Player::Update() {

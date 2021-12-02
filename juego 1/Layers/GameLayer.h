@@ -37,6 +37,8 @@ private:
 	template <typename T>
 	void deleteActors(std::list<T>& list);
 
+	int mapRangeControls(int stick);
+
 private:
 	int m_controlMoveX = 0;
 	int m_controlMoveY = 0;

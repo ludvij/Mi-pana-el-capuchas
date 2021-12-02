@@ -8,8 +8,8 @@ public:
 	~Player();
 
 	void Update();
-	void MoveX(float axis);
-	void MoveY(float axis);
+	void MoveX(float multiplier);
+	void MoveY(float multiplier);
 
 
 	virtual void Draw(float scrollX = 0) override;
@@ -17,5 +17,8 @@ public:
 
 	Orientation orientation;
 	State state;
+
+private:
+	float m_maxSpeed = 4;
 };
 
