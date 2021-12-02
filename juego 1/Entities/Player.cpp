@@ -11,6 +11,13 @@ Player::~Player()
 {
 }
 
+void Player::MoveX(float axis) {
+	Vec.x = axis * 3;
+}
+void Player::MoveY(float axis) {
+	Vec.y = axis * 3;
+}
+
 void Player::Update() {
 	if (Vec.x > 0) {
 		orientation = Orientation::RIGHT;

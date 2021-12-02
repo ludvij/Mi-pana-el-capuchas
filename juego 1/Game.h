@@ -1,13 +1,32 @@
 #pragma once
+#include <SDL.h>
+#include <SDL_image.h>
 
 #include "Layers/Layer.h"
 
-#include <SDL.h>
-#include <SDL_image.h>
 
 #include <string>
 #include <random>
 #include <map>
+#include <iostream>
+
+#ifdef _DEBUG
+	#define  LOG_ERROR(x) std::cerr <<"\x1B[31m[ERROR]: " << x << "\x1B[0m" << std::endl
+	#define  LOG_TRACE(x) std::cout <<"[TRACE]: " << x << std::endl
+	#define  LOG_INFO(x)  std::cout <<"\x1B[36m[INFO]: " << x << "\x1B[0m" << std::endl
+#else
+	#define  LOG_ERROR(x)
+	#define  LOG_TRACE(x) 
+	#define  LOG_INFO(x)
+#endif
+
+#define HEX_COLOR(code) \
+  ((code) >> (3 * 8)) & 0xFF, \
+  ((code) >> (2 * 8)) & 0xFF, \
+  ((code) >> (1 * 8)) & 0xFF, \
+  ((code) >> (0 * 8)) & 0xFF
+
+
 
 constexpr float MS_PER_FRAME = 1000 / 75;
 
@@ -21,6 +40,7 @@ struct Vector2D {
 };
 
 enum class Input {
+	NONE,
 	KEYBOARD,
 	CONTROLLER,
 };
@@ -56,13 +76,13 @@ public:
 
 	void Present();
 
-
 	SDL_Texture* GetTexture(std::string_view filename);
 
 	void GameLoop();
 
 	SDL_Window* Window = nullptr;
 	SDL_Renderer* Renderer = nullptr;
+	Input Input = Input::NONE;
 
 	uint32_t Width = 800;
 	uint32_t Height = 800;

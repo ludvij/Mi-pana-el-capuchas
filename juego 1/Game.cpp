@@ -2,8 +2,6 @@
 
 #include "Layers/GameLayer.h"
 
-#include <iostream>
-
 Game Game::s_Instance;
 
 Game::~Game()
@@ -43,19 +41,19 @@ Game::Game()
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 	{
-		std::cerr << "Error SDL_Init: " << SDL_GetError() << std::endl;
+		LOG_ERROR("Error SDL_Init: " << SDL_GetError());
 		return;
 	}
 	Window = SDL_CreateWindow("SEV: juego 1", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, Width, Height, 0);
 	if (Window == nullptr)
 	{
-		std::cerr << "Error Window: " << SDL_GetError() << std::endl;
+		LOG_ERROR("Error Window : " << SDL_GetError());
 		return;
 	}
 	Renderer = SDL_CreateRenderer(Window, -1, 0);
 	if (Renderer == nullptr)
 	{
-		std::cerr << "Error Window: " << SDL_GetError() << std::endl;
+		LOG_ERROR("Error Window: " << SDL_GetError());
 		return;
 	}
 
@@ -93,21 +91,27 @@ int Game::randomInt(int min, int max)
 void Game::Present()
 {
 	SDL_RenderPresent(Renderer);
+	SDL_SetRenderDrawColor(Renderer, HEX_COLOR(0));
+	SDL_RenderClear(Renderer);
 }
+
+
+
+
 
 SDL_Texture* Game::GetTexture(std::string_view filename)
 {
 	const char* data = filename.data();
 
 	if (mapTexture.find(data) != mapTexture.end()) {
-		std::cout << '\t' << "retorno recurso cacheado: " << filename << std::endl;
+		LOG_INFO("retorno recurso cacheado: " << filename);
 	}
 	else {
-		std::cout << '\t' << "Nuevo hay que cachearlo " << filename << std::endl;
+		LOG_INFO("Nuevo hay que cachearlo ");
 		SDL_Surface* surface = IMG_Load(data);
 		if (surface == nullptr)
 		{
-			std::cout << '\t' << "Archivo no encontrado " << filename << std::endl;
+			LOG_ERROR("Archivo no encontrado " << filename);
 			SDL_FreeSurface(surface);
 			return nullptr;
 		}

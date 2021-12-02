@@ -48,6 +48,9 @@
     <ClInclude Include="Entities\Player.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Physics\Space.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -59,9 +62,6 @@
     <ClCompile Include="Entities\Entity.cpp">
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="Layers\Layer.cpp">
-      <Filter>Source Files\Layers</Filter>
-    </ClCompile>
     <ClCompile Include="Layers\GameLayer.cpp">
       <Filter>Source Files\Layers</Filter>
     </ClCompile>
@@ -70,6 +70,12 @@
     </ClCompile>
     <ClCompile Include="Entities\Player.cpp">
       <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Layers\Layer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\Space.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

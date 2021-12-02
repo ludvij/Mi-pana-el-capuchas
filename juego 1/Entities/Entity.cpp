@@ -30,7 +30,10 @@ void Entity::Draw(float scrollX)
 	destination.w = width;
 	destination.h = height;
 #ifdef _DEBUG
+	SDL_SetRenderDrawColor(Game::Get().Renderer, HEX_COLOR(0xffffffff));
 	SDL_RenderDrawRect(Game::Get().Renderer, &destination);
+	SDL_SetRenderDrawColor(Game::Get().Renderer, HEX_COLOR(0));
+
 #endif // _DEBUG
 	SDL_RenderCopyEx(Game::Get().Renderer, m_texture, &source, &destination, 0, nullptr, SDL_FLIP_NONE);
 }

@@ -8,8 +8,8 @@ public:
 	~Player();
 
 	void Update();
-	void moveX(float axis);
-	void moveY(float axis);
+	void MoveX(float axis);
+	void MoveY(float axis);
 
 
 	virtual void Draw(float scrollX = 0) override;
