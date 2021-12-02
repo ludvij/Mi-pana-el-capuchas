@@ -1,21 +1,21 @@
 #include "Entities/Entity.h"
 
 
-Entity::Entity(std::string_view filename, int x, int y, int w, int h)
-	: x(x), y(y), w(w), h(h)
+Entity::Entity(std::string_view filename, int x, int y, int width, int height)
+	: x(x), y(y), width(width), height(height)
 {
 	m_texture = Game::Get().GetTexture(filename);
 	// get texture size
 	SDL_QueryTexture(m_texture, nullptr, nullptr, &m_texSize.x, &m_texSize.y);
 }
 
-Entity::Entity(int x, int y, int w, int h)
-	: x(x), y(y), w(w), h(h)
+Entity::Entity(int x, int y)
+	: x(x), y(y), width(0), height(0)
 {
 
 }
 
-void Entity::Draw()
+void Entity::Draw(float scrollX)
 {
 	// tamaño de la textura
 	SDL_Rect source;
@@ -25,23 +25,34 @@ void Entity::Draw()
 	source.h = m_texSize.y;
 	// tamaño de la entidad
 	SDL_Rect destination;
-	destination.x = x - w / 2;
-	destination.y = y - h / 2;
-	destination.w = w;
-	destination.h = h;
-
+	destination.x = x - width / 2;
+	destination.y = y - height / 2;
+	destination.w = width;
+	destination.h = height;
+#ifdef _DEBUG
+	SDL_RenderDrawRect(Game::Get().Renderer, &destination);
+#endif // _DEBUG
 	SDL_RenderCopyEx(Game::Get().Renderer, m_texture, &source, &destination, 0, nullptr, SDL_FLIP_NONE);
 }
 
-void Entity::DrawOutline(bool fill)
+bool Entity::IsOverlap(Entity* entity)
 {
-	SDL_Rect destination;
-	destination.x = x - w / 2;
-	destination.y = y - h / 2;
-	destination.w = w;
-	destination.h = h;
-	if (fill)
-		SDL_RenderFillRect(Game::Get().Renderer, &destination);
-	else
-		SDL_RenderDrawRect(Game::Get().Renderer, &destination);
+	bool overlap = false;
+	if (entity->x - entity->width / 2 <= x + width / 2
+		&& entity->x + entity->width / 2 >= x - width / 2
+		&& entity->y + entity->height / 2 >= y - height / 2
+		&& entity->y - entity->height / 2 <= y + height / 2) {
+		overlap = true;
+	}
+	return overlap;
 }
+bool Entity::IsInrender(float scrollX)
+{
+	
+	if((x - scrollX) - width / 2 <= Game::Get().Width && (x - scrollX) + width / 2 >= 0 &&
+		y - height / 2 <= Game::Get().Height && y + height / 2 >= 0) {
+		return true;
+	}
+	return false;
+}
+

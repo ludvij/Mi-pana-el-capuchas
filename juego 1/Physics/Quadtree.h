@@ -3,6 +3,7 @@
 #include <type_traits>
 
 
+
 // quadtree to manage collisions
 // totally overkill for the game this will be on
 // but I want to do it anyway

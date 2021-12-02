@@ -39,8 +39,14 @@
     <ClInclude Include="Layers\Layer.h">
       <Filter>Header Files\Layers</Filter>
     </ClInclude>
-    <ClInclude Include="Layers\DebugLayer.h">
+    <ClInclude Include="Layers\GameLayer.h">
       <Filter>Header Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Tile.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Player.h">
+      <Filter>Header Files\Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -56,8 +62,19 @@
     <ClCompile Include="Layers\Layer.cpp">
       <Filter>Source Files\Layers</Filter>
     </ClCompile>
-    <ClCompile Include="Layers\DebugLayer.cpp">
+    <ClCompile Include="Layers\GameLayer.cpp">
       <Filter>Source Files\Layers</Filter>
     </ClCompile>
+    <ClCompile Include="Entities\Tile.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Player.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="rcs\player.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

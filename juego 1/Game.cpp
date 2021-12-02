@@ -1,6 +1,6 @@
 #include "Game.h"
 
-#include "Layers/DebugLayer.h"
+#include "Layers/GameLayer.h"
 
 #include <iostream>
 
@@ -21,8 +21,8 @@ void Game::GameLoop()
 	while (m_loopActive) {
 		initTick = SDL_GetTicks();
 
-		// Controls
-		layer->ProcessControls();
+		// events and controls
+		processGameEvents();
 
 		// Update elements
 		layer->Update();
@@ -59,7 +59,23 @@ Game::Game()
 		return;
 	}
 
-	layer = new DebugLayer();
+	// initialise random number generator
+	std::random_device device;
+	m_mt = std::mt19937(device());
+
+	layer = new GameLayer();
+}
+
+void Game::processGameEvents()
+{
+	SDL_Event event;
+	while (SDL_PollEvent(&event))
+	{
+		if (event.type == SDL_QUIT) {
+			Game::Get().Stop();
+		}
+		layer->ProcessControls(event);
+	}
 }
 
 void Game::Run()
@@ -68,8 +84,39 @@ void Game::Run()
 	GameLoop();
 }
 
+int Game::randomInt(int min, int max)
+{
+	std::uniform_int_distribution<int> dist(min, max);
+	return dist(m_mt);
+}
+
+void Game::Present()
+{
+	SDL_RenderPresent(Renderer);
+}
+
 SDL_Texture* Game::GetTexture(std::string_view filename)
 {
-    return nullptr;
+	const char* data = filename.data();
+
+	if (mapTexture.find(data) != mapTexture.end()) {
+		std::cout << '\t' << "retorno recurso cacheado: " << filename << std::endl;
+	}
+	else {
+		std::cout << '\t' << "Nuevo hay que cachearlo " << filename << std::endl;
+		SDL_Surface* surface = IMG_Load(data);
+		if (surface == nullptr)
+		{
+			std::cout << '\t' << "Archivo no encontrado " << filename << std::endl;
+			SDL_FreeSurface(surface);
+			return nullptr;
+		}
+		SDL_Texture* texture = SDL_CreateTextureFromSurface(Renderer, surface);
+		mapTexture[data] = texture;
+
+		SDL_FreeSurface(surface);
+	}
+
+	return mapTexture[data];
 }
 

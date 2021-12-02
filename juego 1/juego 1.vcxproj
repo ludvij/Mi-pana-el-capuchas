@@ -175,18 +175,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Layers\DebugLayer.h" />
     <ClInclude Include="Entities\Entity.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Layers\GameLayer.h" />
     <ClInclude Include="Layers\Layer.h" />
     <ClInclude Include="Physics\Quadtree.h" />
+    <ClInclude Include="Entities\Tile.h" />
+    <ClInclude Include="Entities\Player.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Layers\DebugLayer.cpp" />
     <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Layers\GameLayer.cpp" />
     <ClCompile Include="Layers\Layer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Entities\Tile.cpp" />
+    <ClCompile Include="Entities\Player.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="rcs\player.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

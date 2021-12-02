@@ -8,25 +8,30 @@ class Entity
 {
 public:
 
-	Entity(std::string_view filename, int x, int y, int w, int h);
-	Entity(int x, int y, int w=0, int h=0);
+	Entity(std::string_view filename, int x, int y, int width, int height);
+	Entity(int x, int y);
 
 	virtual ~Entity() {};
 
-	virtual void Draw();
+	virtual void Draw(float ScrollX = 0);
 
-	virtual void DrawOutline(bool fill = false);
+	bool IsOverlap(Entity* entity);
+
+	bool IsInrender(float scrollX = 0);
+
 
 	
 	// position and size
 	int x;
 	int y;
-	int w;
-	int h;
+	int width;
+	int height;
 
 	//velocity
-	SDL_Point Vec = { 0,0 };
+	Vector2D Vec = { 0,0 };
 
+
+private:
 
 private:
 	//texture size
