@@ -1,19 +1,19 @@
 #include "Player.h"
 
 Player::Player(int x, int y)
-	: Entity("rcs/player.png", x, y, 140, 140),
+	: Entity("rcs/player/player.png", x, y, Game::Get().CellSizeX, Game::Get().CellSizeY),
 	orientation(Orientation::NONE),
-	state(State::NONE)
+	state(State::IDLE)
 {
-	m_aIdleBack  = new Animation("rcs/player_idle_back.png",  width, height, 18, 3, true);
-	m_aIdleFront = new Animation("rcs/player_idle_front.png", width, height, 18, 3, true);
-	m_aIdleLeft  = new Animation("rcs/player_idle_left.png",  width, height, 18, 3, true);
-	m_aIdleRight = new Animation("rcs/player_idle_right.png", width, height, 18, 3, true);
+	m_aIdleBack  = new Animation("rcs/player/player_idle_back.png",  width, height, 18, 3, true);
+	m_aIdleFront = new Animation("rcs/player/player_idle_front.png", width, height, 18, 3, true);
+	m_aIdleLeft  = new Animation("rcs/player/player_idle_left.png",  width, height, 18, 3, true);
+	m_aIdleRight = new Animation("rcs/player/player_idle_right.png", width, height, 18, 3, true);
 
-	m_aMoveBack  = new Animation("rcs/player_move_back.png",  width, height, 18, 4, true);
-	m_aMoveFront = new Animation("rcs/player_move_front.png", width, height, 18, 4, true);
-	m_aMoveLeft  = new Animation("rcs/player_move_left.png",  width, height, 18, 4, true);
-	m_aMoveRight = new Animation("rcs/player_move_right.png", width, height, 18, 4, true);
+	m_aMoveBack  = new Animation("rcs/player/player_move_back.png",  width, height, 18, 4, true);
+	m_aMoveFront = new Animation("rcs/player/player_move_front.png", width, height, 18, 4, true);
+	m_aMoveLeft  = new Animation("rcs/player/player_move_left.png",  width, height, 18, 4, true);
+	m_aMoveRight = new Animation("rcs/player/player_move_right.png", width, height, 18, 4, true);
 
 	m_animation = m_aIdleFront;
 }

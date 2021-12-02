@@ -50,7 +50,7 @@ enum class State {
 	DYING,
 	DEAD,
 	SHOOTING,
-	NONE,
+	IDLE,
 };
 
 enum class Orientation : int {
@@ -84,8 +84,11 @@ public:
 	SDL_Renderer* Renderer = nullptr;
 	Input Input = Input::NONE;
 
-	uint32_t Width = 800;
-	uint32_t Height = 800;
+	uint32_t Width = 900;
+	uint32_t Height = 900;
+
+	int CellSizeX = Width / 18;
+	int CellSizeY = Height / 18;
 
 private:
 

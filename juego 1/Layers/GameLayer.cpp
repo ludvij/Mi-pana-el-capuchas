@@ -1,5 +1,7 @@
 ﻿#include "Layers/GameLayer.h"
 #include <algorithm>
+#include <fstream>
+#include <sstream>
 
 GameLayer::GameLayer()
 {
@@ -69,6 +71,8 @@ void GameLayer::gamepadToControls(SDL_Event event)
 void GameLayer::deleteAll()
 {
 	delete player;
+	space.Clear();
+	while (!tiles.empty()) delete tiles.back(), tiles.pop_back();
 }
 
 
@@ -98,12 +102,15 @@ int GameLayer::mapRangeControls(int stick)
 void GameLayer::Init() {
 	deleteAll();
 	space = Space();
-	player = new Player(Game::Get().Width/2, Game::Get().Height/2);
-	space.addDynamicEntity(player);
+	loadMap("rcs/maps/map2");
 }
 
 void GameLayer::Draw()
 {
+
+	for (const auto& tile : tiles) {
+		tile->Draw();
+	}
 	player->Draw();
 
 	Game::Get().Present();
@@ -112,7 +119,7 @@ void GameLayer::Draw()
 void GameLayer::Update() 
 {
 	player->Update();
-	space.update();
+	space.Update();
 }
 
 void GameLayer::ProcessControls(SDL_Event event)
@@ -165,5 +172,66 @@ inline void GameLayer::deleteActors(std::list<T>& list)
 			list.erase(itr);
 			delete ent;
 		}
+	}
+}
+
+void GameLayer::loadMap(std::string_view name) {
+	char character = 0;
+	int cellX = Game::Get().CellSizeX;
+	int cellY = Game::Get().CellSizeY;
+	std::string line;
+	std::ifstream streamFile(name.data());
+	if (!streamFile.is_open()) {
+		LOG_ERROR("Falla abrir el fichero de mapa");
+		return;
+	}
+	else {
+		// Por l�nea
+		for (int i = 0; getline(streamFile, line); i++) {
+			std::istringstream streamLine(line);
+			m_mapWidth = line.length() * cellX; // Ancho del mapa en pixels
+			// Por car�cter (en cada l�nea)
+			for (int j = 0; !streamLine.eof(); j++) {
+				streamLine >> character; // Leer character 
+				//std::cout << character;
+				float x = cellX / 2 + j * cellX; // x central
+				float y = cellY + i * cellY; // y suelo
+				loadMapObj(character, x, y);
+			}
+
+			//std::cout << character << std::endl;
+		}
+	}
+	streamFile.close();
+}
+
+
+void GameLayer::loadMapObj(char character, int x, int y)
+{
+	switch (character) {
+
+	case '1': {
+
+		player = new Player(x, y);
+		// modificaci�n para empezar a contar desde el suelo.
+		player->y = player->y - player->height / 2;
+		space.AddDynamicEntity(player);
+		break;
+	}
+	case 'B': {
+		auto tile = new Tile("rcs/tiles/tile_bricks.png", x, y);
+		// modificaci�n para empezar a contar desde el suelo.
+		tile->y = tile->y - tile->height / 2;
+		tiles.push_back(tile);
+		space.AddStaticEntity(tile);
+		break;
+	}
+	/*case 'E': {
+		auto enemy = new Enemy(x, y, game);
+		enemy->y = enemy->y - enemy->height / 2;
+		enemies.emplace_back(enemy);
+		space->addDynamicActor(enemy);
+		break;
+	}*/
 	}
 }

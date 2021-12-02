@@ -5,13 +5,19 @@ Space::Space()
 }
 
 
-void Space::addDynamicEntity(Entity* entity) { dynamicEntitys.push_back(entity); }
-void Space::addStaticEntity(Entity* entity) { staticEntitys.push_back(entity); }
-void Space::removeDynamicEntity(Entity* entity) { dynamicEntitys.remove(entity); }
-void Space::removeStaticEntity(Entity* entity) { staticEntitys.remove(entity); }
+void Space::AddDynamicEntity(Entity* entity) { dynamicEntities.push_back(entity); }
+void Space::AddStaticEntity(Entity* entity) { staticEntities.push_back(entity); }
+void Space::RemoveDynamicEntity(Entity* entity) { dynamicEntities.remove(entity); }
+void Space::RemoveStaticEntity(Entity* entity) { staticEntities.remove(entity); }
 
-void Space::update() {
-	for (auto const& entity : dynamicEntitys) {
+void Space::Clear()
+{
+	dynamicEntities.clear();
+	staticEntities.clear();
+}
+
+void Space::Update() {
+	for (auto const& entity : dynamicEntities) {
 
 		// MoverDerecha / izquierda
 		updateMoveRight(entity);
@@ -26,7 +32,7 @@ void Space::updateMoveTop(Entity* dynamicAct) {
 		int possibleMovement = dynamicAct->Vec.y;
 		// El mejor "idealmente" Vec.y partimos de ese
 
-		for (auto const& staticAct : staticEntitys) {
+		for (auto const& staticAct : staticEntities) {
 			int topDynamic = dynamicAct->y - dynamicAct->height / 2;
 			int downDynamic = dynamicAct->y + dynamicAct->height / 2;
 			int rightDynamic = dynamicAct->x + dynamicAct->width / 2;
@@ -66,7 +72,7 @@ void Space::updateMoveDown(Entity* dynamicAct) {
 		int possibleMovement = dynamicAct->Vec.y;
 		// El mejor "idealmente" Vec.y partimos de ese
 
-		for (auto const& staticAct : staticEntitys) {
+		for (auto const& staticAct : staticEntities) {
 			int topDynamic = dynamicAct->y - dynamicAct->height / 2;
 			int downDynamic = dynamicAct->y + dynamicAct->height / 2;
 			int rightDynamic = dynamicAct->x + dynamicAct->width / 2;
@@ -105,7 +111,7 @@ void Space::updateMoveRight(Entity* dynamicAct) {
 		int possibleMovement = dynamicAct->Vec.x;
 		// El mejor "idealmente" Vec.x partimos de ese
 
-		for (auto const& staticAct : staticEntitys) {
+		for (auto const& staticAct : staticEntities) {
 			int rightDynamic = dynamicAct->x + dynamicAct->width / 2;
 			int topDynamic = dynamicAct->y - dynamicAct->height / 2;
 			int downDynamic = dynamicAct->y + dynamicAct->height / 2;
@@ -142,7 +148,7 @@ void Space::updateMoveLeft(Entity* dynamicAct) {
 		int possibleMovement = dynamicAct->Vec.x;
 		// El mejor "idealmente" Vec.x partimos de ese
 
-		for (auto const& staticAct : staticEntitys) {
+		for (auto const& staticAct : staticEntities) {
 			int leftDynamic = dynamicAct->x - dynamicAct->width / 2;
 			int topDynamic = dynamicAct->y - dynamicAct->height / 2;
 			int downDynamic = dynamicAct->y + dynamicAct->height / 2;

@@ -3,6 +3,7 @@
 #include "Layers/Layer.h"
 #include "Entities/Player.h"
 #include "Physics/space.h"
+#include "Entities/TIle.h"
 
 #include <list>
 
@@ -22,11 +23,13 @@ public: // maybe change it to private
 	Player* player;
 	SDL_GameController* controller;
 	Space space;
+	std::list<Tile*> tiles;
+
 
 private:
 
-	void loadMap(std::string name);
-	void loadMapObj(char character, float x, float y);
+	void loadMap(std::string_view name);
+	void loadMapObj(char character, int x, int y);
 
 	void keysToControls(SDL_Event event);
 	void gamepadToControls(SDL_Event event);
@@ -42,6 +45,9 @@ private:
 private:
 	int m_controlMoveX = 0;
 	int m_controlMoveY = 0;
+
+	int m_mapWidth;
+	int m_mapHeight;
 };
 
 
