@@ -1,5 +1,6 @@
 #pragma once
 #include "Entity.h"
+#include "Animation.h"
 
 class Player : public Entity
 {
@@ -20,5 +21,17 @@ public:
 
 private:
 	float m_maxSpeed = 4;
+
+	Animation* m_aIdleFront;
+	Animation* m_aIdleBack;
+	Animation* m_aIdleLeft;
+	Animation* m_aIdleRight;
+
+	Animation* m_aMoveFront;
+	Animation* m_aMoveBack;
+	Animation* m_aMoveLeft;
+	Animation* m_aMoveRight;
+
+	Animation* m_animation;
 };
 

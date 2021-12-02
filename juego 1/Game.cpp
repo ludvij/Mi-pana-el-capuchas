@@ -104,14 +104,14 @@ SDL_Texture* Game::GetTexture(std::string_view filename)
 	const char* data = filename.data();
 
 	if (mapTexture.find(data) != mapTexture.end()) {
-		LOG_INFO("retorno recurso cacheado: " << filename);
+		LOG_INFO("Retrieved cached texture: " << filename);
 	}
 	else {
-		LOG_INFO("Nuevo hay que cachearlo ");
+		LOG_INFO("Cached new texture: " << filename);
 		SDL_Surface* surface = IMG_Load(data);
 		if (surface == nullptr)
 		{
-			LOG_ERROR("Archivo no encontrado " << filename);
+			LOG_ERROR("File not found: " << filename);
 			SDL_FreeSurface(surface);
 			return nullptr;
 		}

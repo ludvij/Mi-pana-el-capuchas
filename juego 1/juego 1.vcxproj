@@ -175,6 +175,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Entities\Animation.h" />
     <ClInclude Include="Entities\Entity.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Layers\GameLayer.h" />
@@ -185,6 +186,7 @@
     <ClInclude Include="Physics\Space.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Entities\Animation.cpp" />
     <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Layers\GameLayer.cpp" />
