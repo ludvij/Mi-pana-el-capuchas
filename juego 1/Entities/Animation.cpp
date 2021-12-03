@@ -54,10 +54,10 @@ void Animation::Draw(int x, int y) {
 	SDL_RenderCopyEx(Game::Get().Renderer,
 		m_texture, &m_source, &destination, 0, NULL, SDL_FLIP_NONE);
 
-#ifdef _DEBUG
+#ifdef OUTLINE
 	SDL_SetRenderDrawColor(Game::Get().Renderer, HEX_COLOR(0xffffffff));
 	SDL_RenderDrawRect(Game::Get().Renderer, &destination);
 	SDL_SetRenderDrawColor(Game::Get().Renderer, HEX_COLOR(0));
 
-#endif // _DEBUG
+#endif // OUTLINE
 }

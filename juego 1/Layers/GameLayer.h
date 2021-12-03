@@ -7,6 +7,12 @@
 
 #include <list>
 
+constexpr int MAX_POS = 30000;
+constexpr int MIN_POS = 4000;
+
+constexpr int MAX_MAP_POS = 50;
+constexpr int MIN_MAP_POS = 1;
+
 class GameLayer : public Layer
 {
 public:

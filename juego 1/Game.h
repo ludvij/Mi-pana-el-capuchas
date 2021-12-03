@@ -11,6 +11,12 @@
 #include <iostream>
 
 #ifdef _DEBUG
+	#define LOG
+	//#define OUTLINE
+#endif // _DEBUG
+
+
+#ifdef LOG
 	#define  LOG_ERROR(x) std::cerr <<"\x1B[31m[ERROR]: " << x << "\x1B[0m" << std::endl
 	#define  LOG_TRACE(x) std::cout <<"[TRACE]: " << x << std::endl
 	#define  LOG_INFO(x)  std::cout <<"\x1B[36m[INFO]: " << x << "\x1B[0m" << std::endl
