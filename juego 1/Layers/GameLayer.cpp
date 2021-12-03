@@ -15,14 +15,57 @@ GameLayer::~GameLayer()
 
 void GameLayer::keysToControls(SDL_Event event)
 {
+	if (event.type == SDL_KEYDOWN) {
+		int code = event.key.keysym.sym;
+		// Pulsada
+		switch (code) {
+		case SDLK_ESCAPE:
+#ifdef _DEBUG
+			Game::Get().Stop();
+#endif // DEBUG
+
+			break;
+		case SDLK_d: // derecha
+			m_controlMoveX = MAX_MAP_POS;
+			break;
+		case SDLK_a: // izquierda
+			m_controlMoveX = -MAX_MAP_POS;
+			break;
+		case SDLK_w: // arriba
+			m_controlMoveY = -MAX_MAP_POS;
+			break;
+		case SDLK_s: // abajo
+			m_controlMoveY = MAX_MAP_POS;
+			break;
+		}
+	}
+	if (event.type == SDL_KEYUP) {
+		int code = event.key.keysym.sym;
+		// Levantada
+		switch (code) {
+		case SDLK_d: // derecha
+			if (m_controlMoveX != 0) {
+				m_controlMoveX = 0;
+			}
+			break;
+		case SDLK_a: // izquierda
+			if (m_controlMoveX != 0) {
+				m_controlMoveX = 0;
+			}
+			break;
+		case SDLK_w: // arriba
+			if (m_controlMoveY != 0) {
+				m_controlMoveY = 0;
+			}
+			break;
+		case SDLK_s: // abajo
+			if (m_controlMoveY != 1) {
+				m_controlMoveY = 0;
+			}
+			break;
+		}
+	}
 }
-
-
-constexpr int MAX_POS = 30000;
-constexpr int MIN_POS = 4000;
-
-constexpr int MAX_MAP_POS = 50;
-constexpr int MIN_MAP_POS = 1;
 
 
 void GameLayer::gamepadToControls(SDL_Event event)
@@ -190,7 +233,7 @@ void GameLayer::loadMap(std::string_view name) {
 		for (int i = 0; getline(streamFile, line); i++) {
 			std::istringstream streamLine(line);
 			m_mapWidth = line.length() * cellX; // Ancho del mapa en pixels
-			// Por car�cter (en cada l�nea)
+			// Por car�cter (en cada línea)
 			for (int j = 0; !streamLine.eof(); j++) {
 				streamLine >> character; // Leer character 
 				//std::cout << character;
@@ -208,6 +251,10 @@ void GameLayer::loadMap(std::string_view name) {
 
 void GameLayer::loadMapObj(char character, int x, int y)
 {
+	int tex = Game::Get().randomInt(1, 4);
+	std::string grass = "rcs/tiles/tile_grass";
+	grass += std::to_string(tex);
+	grass += ".png";
 	switch (character) {
 
 	case '1': {
@@ -216,6 +263,9 @@ void GameLayer::loadMapObj(char character, int x, int y)
 		// modificaci�n para empezar a contar desde el suelo.
 		player->y = player->y - player->height / 2;
 		space.AddDynamicEntity(player);
+		auto tile = new Tile(grass, x, y);
+		tile->y = tile->y - tile->height / 2;
+		tiles.push_back(tile);
 		break;
 	}
 	case 'B': {
@@ -225,6 +275,11 @@ void GameLayer::loadMapObj(char character, int x, int y)
 		tiles.push_back(tile);
 		space.AddStaticEntity(tile);
 		break;
+	}
+	case '.': {
+		auto tile = new Tile(grass, x, y);
+		tile->y = tile->y - tile->height / 2;
+		tiles.push_back(tile);
 	}
 	/*case 'E': {
 		auto enemy = new Enemy(x, y, game);
