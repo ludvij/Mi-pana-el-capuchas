@@ -7,10 +7,7 @@ Space::Space()
 
 void Space::AddDynamicEntity(Entity* entity) { dynamicEntities.push_back(entity); }
 void Space::AddStaticEntity(Entity* entity) { staticEntities.push_back(entity); }
-void Space::RemoveDynamicEntity(Entity* entity) {
-	RemoveProjectile(entity);
-	dynamicEntities.remove(entity); 
-}
+void Space::RemoveDynamicEntity(Entity* entity) { dynamicEntities.remove(entity); }
 void Space::RemoveStaticEntity(Entity* entity) { staticEntities.remove(entity); }
 
 void Space::AddProjectile(Entity* proj) { projectiles.push_back(proj);  }
@@ -33,13 +30,20 @@ void Space::Update() {
 		updateMoveTop(entity);
 		updateMoveDown(entity);
 	}
-	for (const auto& p : projectiles) 
+	auto itr = projectiles.begin();
+	while (itr != projectiles.end())
 	{
+		Entity* p = *itr;
 		updateMoveRightProj(p);
 		updateMoveLeftProj(p);
 		updateMoveTopProj(p);
 		updateMoveDownProj(p);
+		if (p->Deleted)
+			projectiles.erase(itr++);
+		else
+			itr++;
 	}
+
 }
 
 void Space::updateMoveTop(Entity* dynamicAct) {
