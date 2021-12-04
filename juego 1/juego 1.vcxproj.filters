@@ -19,22 +19,25 @@
     <Filter Include="Source Files\Layers">
       <UniqueIdentifier>{cd16564b-80cf-4198-a7fc-82385fdebcf9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Entities">
-      <UniqueIdentifier>{51297fbd-5cf9-4579-bbef-7107ee051304}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Entities">
       <UniqueIdentifier>{e080b970-a08b-4a85-b734-96be4f5a9a8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity">
+      <UniqueIdentifier>{51297fbd-5cf9-4579-bbef-7107ee051304}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity\Weapons">
+      <UniqueIdentifier>{8f831886-4f00-4d8e-bef5-440d4a620c09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Weapons">
+      <UniqueIdentifier>{bed47091-5571-4f04-a210-d43398e0b1fe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Physics\Quadtree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Entities\Entity.h">
-      <Filter>Header Files\Entities</Filter>
+      <Filter>Header Files\Entity</Filter>
     </ClInclude>
     <ClInclude Include="Layers\Layer.h">
       <Filter>Header Files\Layers</Filter>
@@ -43,16 +46,28 @@
       <Filter>Header Files\Layers</Filter>
     </ClInclude>
     <ClInclude Include="Entities\Tile.h">
-      <Filter>Header Files\Entities</Filter>
+      <Filter>Header Files\Entity</Filter>
     </ClInclude>
     <ClInclude Include="Entities\Player.h">
-      <Filter>Header Files\Entities</Filter>
+      <Filter>Header Files\Entity</Filter>
     </ClInclude>
     <ClInclude Include="Physics\Space.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Entities\Animation.h">
-      <Filter>Header Files\Entities</Filter>
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Projectile.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Weapon.h">
+      <Filter>Header Files\Entity\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Wand.h">
+      <Filter>Header Files\Entity\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Quadtree.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +97,15 @@
     </ClCompile>
     <ClCompile Include="Entities\Animation.cpp">
       <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Projectile.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Weapon.cpp">
+      <Filter>Source Files\Entities\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Wand.cpp">
+      <Filter>Source Files\Entities\Weapons</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

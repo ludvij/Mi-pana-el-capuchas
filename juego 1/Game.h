@@ -17,13 +17,13 @@
 
 
 #ifdef LOG
-	#define  LOG_ERROR(x) std::cerr <<"\x1B[31m[ERROR]: " << x << "\x1B[0m" << std::endl
-	#define  LOG_TRACE(x) std::cout <<"[TRACE]: " << x << std::endl
-	#define  LOG_INFO(x)  std::cout <<"\x1B[36m[INFO]: " << x << "\x1B[0m" << std::endl
+	#define LOG_ERROR(x) std::cerr << "\x1B[31m[ERROR]: " << x << "\x1B[0m" << std::endl
+	#define LOG_TRACE(x) std::cout << "[TRACE]: "         << x              << std::endl
+	#define LOG_INFO(x)  std::cout << "\x1B[36m[INFO]: "  << x << "\x1B[0m" << std::endl
 #else
-	#define  LOG_ERROR(x)
-	#define  LOG_TRACE(x) 
-	#define  LOG_INFO(x)
+	#define LOG_ERROR(x)
+	#define LOG_TRACE(x) 
+	#define LOG_INFO(x)
 #endif
 
 #define HEX_COLOR(code) \
@@ -34,7 +34,7 @@
 
 
 
-constexpr float MS_PER_FRAME = 1000 / 75;
+constexpr float MS_PER_FRAME = 1000.0f / 60.0f;
 
 
 class Layer;

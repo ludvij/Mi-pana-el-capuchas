@@ -19,12 +19,11 @@ void GameLayer::keysToControls(SDL_Event event)
 		int code = event.key.keysym.sym;
 		// Pulsada
 		switch (code) {
-		case SDLK_ESCAPE:
 #ifdef _DEBUG
+		case SDLK_ESCAPE:
 			Game::Get().Stop();
-#endif // DEBUG
-
 			break;
+#endif // DEBUG
 		case SDLK_d: // derecha
 			m_controlMoveX = MAX_MAP_POS;
 			break;
@@ -71,42 +70,45 @@ void GameLayer::keysToControls(SDL_Event event)
 void GameLayer::gamepadToControls(SDL_Event event)
 {
 	// Leer los botones
-	bool buttonA = SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_A);
-	bool buttonB = SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_B);
-	// SDL_CONTROLLER_BUTTON_A, SDL_CONTROLLER_BUTTON_B
-	// SDL_CONTROLLER_BUTTON_X, SDL_CONTROLLER_BUTTON_Y
+	bool triggerUR = SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);
+
 	int stickX = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTX);
 	int stickY = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTY);
 
-	//LOG_TRACE("botones:" << buttonA << "," << buttonB);
-	//LOG_TRACE("stickX: " << stickX << " stickY: " << stickY);
+	float stickRotX = static_cast<float>(SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_RIGHTX));
+	float stickRotY = static_cast<float>(SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_RIGHTY));
+
+	if (triggerUR) {
+		m_controlShoot = true;
+	}
+	else {
+		m_controlShoot = false;
+	}
+
 
 	// Retorna aproximadamente entre [-32800, 32800], el centro debería estar en 0
 	// Si el mando tiene "holgura" el centro varia [-4000 , 4000]
 
-	// TODO: mapear de alguna forma el rango de el jystick a una escala para hacer que el movimiento no sea super clunky
-	// coger el rango [-30000, 30000] y mapearlo a un rango de el tipo [1, 10]
-	// si esta entre [-4000, 4000] se deja como 0
-	if (stickX > MIN_POS) {
-		
-		m_controlMoveX = mapRangeControls(stickX);
-	}
-	else if (stickX < -MIN_POS) {
+	if (stickX > MIN_POS || stickX < -MIN_POS) {
 		m_controlMoveX = mapRangeControls(stickX);
 	}
 	else {
 		m_controlMoveX = 0;
 	}
 
-	if (stickY > MIN_POS) {
-		m_controlMoveY = mapRangeControls(stickY);
-	}
-	else if (stickY < -MIN_POS) {
+	if (stickY > MIN_POS || stickY < -MIN_POS) {
 		m_controlMoveY = mapRangeControls(stickY);
 	}
 	else {
 		m_controlMoveY = 0;
 	}
+
+	if (!(stickRotX < MIN_POS && stickRotX > -MIN_POS && stickRotY < MIN_POS && stickRotY > -MIN_POS)) {
+		float tangent = std::atan2f(-stickRotY, -stickRotX) * 180.0f / static_cast<float>(M_PI);
+		player->Weapon->Angle = tangent;
+	}
+	else 
+		player->Weapon->Angle = 0;
 
 }
 
@@ -115,7 +117,8 @@ void GameLayer::deleteAll()
 {
 	delete player;
 	space.Clear();
-	while (!tiles.empty()) delete tiles.back(), tiles.pop_back();
+	while (!tiles.empty())       delete tiles.back(),       tiles.pop_back();
+	while (!projectiles.empty()) delete projectiles.back(), projectiles.pop_back();
 }
 
 
@@ -134,11 +137,22 @@ int GameLayer::mapRangeControls(int stick)
 		float t = iLerp(stick, MIN_POS, MAX_POS);
 		return std::lerp(MIN_MAP_POS, MAX_MAP_POS , t);
 	}
-	if (stick < 0) {
+	else if (stick < 0) {
 		float t = iLerp(stick, -MIN_POS, -MAX_POS);
 		return std::lerp(-MIN_MAP_POS, -MAX_MAP_POS, t);
 	}
 	return 0;
+}
+
+void GameLayer::updateCollisions()
+{
+
+	for (const auto& p : projectiles) {
+		if (!p->IsInrender()) {
+			p->Deleted = true;
+		}
+	}
+	deleteActors(projectiles);
 }
 
 
@@ -155,14 +169,18 @@ void GameLayer::Draw()
 		tile->Draw();
 	}
 	player->Draw();
-
+	for (const auto& p : projectiles) p->Draw();
 	Game::Get().Present();
 }
 
-void GameLayer::Update() 
+void GameLayer::Update()
 {
+
+	for (const auto& p : projectiles) p->Update();
 	player->Update();
 	space.Update();
+
+	updateCollisions();
 }
 
 void GameLayer::ProcessControls(SDL_Event event)
@@ -201,19 +219,32 @@ void GameLayer::ProcessControls(SDL_Event event)
 	float speedMultY = static_cast<float>(m_controlMoveY) / static_cast<float>(MAX_MAP_POS);
 	player->MoveX(speedMultX);
 	player->MoveY(speedMultY);
+
+	if (m_controlShoot) {
+		auto p = player->Weapon->Use();
+		if (p != nullptr) {
+			projectiles.push_back(p);
+			space.AddProjectile(p);
+			m_controlShoot = false;
+		}
+	}
 }
 
 template<typename T>
 inline void GameLayer::deleteActors(std::list<T>& list)
 {
-	for (auto itr = list.begin(); itr != list.end(); ++itr)
+	auto itr = list.begin();
+	while(itr != list.end())
 	{
 		T ent = *itr;
-		if (ent->deleted == true)
+		if (ent->Deleted == true)
 		{
-			//space->removeDynamicActor(actor);
-			list.erase(itr);
+			space.RemoveDynamicEntity(ent);
+			list.erase(itr++);
 			delete ent;
+		}
+		else {
+			itr++;
 		}
 	}
 }
@@ -229,7 +260,7 @@ void GameLayer::loadMap(std::string_view name) {
 		return;
 	}
 	else {
-		// Por l�nea
+		// Por línea
 		for (int i = 0; getline(streamFile, line); i++) {
 			std::istringstream streamLine(line);
 			m_mapWidth = line.length() * cellX; // Ancho del mapa en pixels
@@ -251,23 +282,9 @@ void GameLayer::loadMap(std::string_view name) {
 
 void GameLayer::loadMapObj(char character, int x, int y)
 {
-	int tex = Game::Get().randomInt(1, 4);
-	std::string grass = "rcs/tiles/tile_grass";
-	grass += std::to_string(tex);
-	grass += ".png";
+	
 	switch (character) {
 
-	case '1': {
-
-		player = new Player(x, y);
-		// modificaci�n para empezar a contar desde el suelo.
-		player->y = player->y - player->height / 2;
-		space.AddDynamicEntity(player);
-		auto tile = new Tile(grass, x, y);
-		tile->y = tile->y - tile->height / 2;
-		tiles.push_back(tile);
-		break;
-	}
 	case 'B': {
 		auto tile = new Tile("rcs/tiles/tile_bricks.png", x, y);
 		// modificaci�n para empezar a contar desde el suelo.
@@ -276,7 +293,16 @@ void GameLayer::loadMapObj(char character, int x, int y)
 		space.AddStaticEntity(tile);
 		break;
 	}
+	case '1': {
+		player = new Player(x, y);
+		// modificaci�n para empezar a contar desde el suelo.
+		player->y = player->y - player->height / 2;
+		space.AddDynamicEntity(player);
+		[[fallthrough]];
+	}
 	case '.': {
+		int tex = Game::Get().randomInt(1, 4);
+		std::string grass = "rcs/tiles/tile_grass" + std::to_string(tex) + ".png";
 		auto tile = new Tile(grass, x, y);
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);

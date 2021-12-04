@@ -3,7 +3,6 @@
 #include <type_traits>
 
 
-
 // quadtree to manage collisions
 // totally overkill for the game this will be on
 // but I want to do it anyway
@@ -14,7 +13,7 @@ constexpr int MAX_ELEMENTS_QUAD = 4;
 
 
 // the way the quad will insert it's elements
-enum class QuadInsertMode 
+enum class QuadInsertMode
 {
 	POINT,			// a [x, y] point in space
 	REGION_CENTER,  // a region in space defined by a [x, y] point that it's the center of the region and its width and height
@@ -28,12 +27,12 @@ enum class QuadInsertMode
 //! IMPORTANT: for an element to be inserted in the quadtree it has to have an x,y position and a size with width and height
 //! if you are using points just set the w and h to 0 and use QuadInsertMode::POINT
 template <typename T>
-concept QuadInsertable = requires(T t) 
+concept QuadInsertable = requires(T t)
 {
-	{t.x} -> std::same_as<int&>;
-	{t.y} -> std::same_as<int&>;
-	{t.w} -> std::same_as<int&>;
-	{t.h} -> std::same_as<int&>;
+	{t.x}      -> std::same_as<int&>;
+	{t.y}      -> std::same_as<int&>;
+	{t.width}  -> std::same_as<int&>;
+	{t.height} -> std::same_as<int&>;
 };
 
 // contains the stored information of a quad
@@ -43,9 +42,9 @@ class Node
 {
 public:
 	// in case I add more data structures inside the node, who knows
-	uint32_t Length()    { return elements.size(); }
+	uint32_t Length() { return elements.size(); }
 	void add(Q* element) { elements.push_back(element); }
-	void clear()         { elements.clear(); }
+	void clear() { elements.clear(); }
 
 	std::list<Q*> elements;
 
@@ -56,7 +55,7 @@ template <QuadInsertable Q>
 class Quad
 {
 public:
-	Quad(int x, int y, int w, int h, QuadInsertMode mode, int depth=0)
+	Quad(int x, int y, int w, int h, QuadInsertMode mode, int depth = 0)
 		: m_x(x), m_y(y), m_w(w), m_h(h), m_insertMode(mode), m_depth(depth)
 	{
 		m_node = new Node<Q>();
@@ -65,7 +64,7 @@ public:
 	bool Insert(Q* element)
 	{
 		// the element doesn't correspond to this quad
-		if (!rectCollision(m_x, m_y, m_w, m_h, element->x, element->y, element->w, element->h)) return false;
+		if (!rectCollision(m_x, m_y, m_w, m_h, element->x, element->y, element->width, element->height)) return false;
 
 
 		// check if the element fits in this quad
@@ -106,7 +105,7 @@ public:
 
 	std::list<Q*> Query(int rx, int ry, int rw, int rh)
 	{
-		return queryImpl(rx, ry, rw, rh );
+		return queryImpl(rx, ry, rw, rh);
 	}
 
 	~Quad()
@@ -147,7 +146,7 @@ private:
 			return res;
 		}
 		for (const auto& element : m_node->elements) {
-			if (rectCollision(rx, ry, rw, rh, element->x, element->y, element->w, element->h )) {
+			if (rectCollision(rx, ry, rw, rh, element->x, element->y, element->w, element->h)) {
 				bool inList = std::find(res.begin(), res.end(), element) != res.end();
 				if (!inList) res.push_back(element);
 			}
@@ -159,20 +158,19 @@ private:
 	void divide()
 	{
 		// precalculate size
-		int width  = m_w / 2;
+		int width = m_w / 2;
 		int height = m_h / 2;
 
-		m_TopLeft  = new Quad(m_x,         m_y,          width, height, m_insertMode, m_depth + 1);
-		m_TopRight = new Quad(m_x + width, m_y,          width, height, m_insertMode, m_depth + 1);
-		m_BotLeft  = new Quad(m_x,         m_y + height, width, height, m_insertMode, m_depth + 1);
+		m_TopLeft = new Quad(m_x, m_y, width, height, m_insertMode, m_depth + 1);
+		m_TopRight = new Quad(m_x + width, m_y, width, height, m_insertMode, m_depth + 1);
+		m_BotLeft = new Quad(m_x, m_y + height, width, height, m_insertMode, m_depth + 1);
 		m_BotRight = new Quad(m_x + width, m_y + height, width, height, m_insertMode, m_depth + 1);
 
 
 		m_divided = true;
 	}
 
-	bool rectCollision(int r1x, int r1y, int r1w, int r1h,  
-		               int r2x, int r2y, int r2w, int r2h)
+	bool rectCollision(int r1x, int r1y, int r1w, int r1h, int r2x, int r2y, int r2w, int r2h)
 	{
 		// corners of the quad
 		int qxl = r1x;
@@ -238,13 +236,12 @@ private:
 
 	Node<Q>* m_node = nullptr;
 	// child quads
-	Quad* m_TopLeft  = nullptr;
+	Quad* m_TopLeft = nullptr;
 	Quad* m_TopRight = nullptr;
-	Quad* m_BotLeft  = nullptr;
+	Quad* m_BotLeft = nullptr;
 	Quad* m_BotRight = nullptr;
 };
 
 // type alias for clarity
 template <QuadInsertable Q>
 using QuadTree = Quad<Q>;
-

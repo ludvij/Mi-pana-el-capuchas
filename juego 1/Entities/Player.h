@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include "Animation.h"
+#include "Weapon.h"
 
 class Player : public Entity
 {
@@ -18,6 +19,7 @@ public:
 
 	Orientation orientation;
 	State state;
+	Weapon* Weapon;
 
 private:
 	float m_maxSpeed = 4;
@@ -33,5 +35,6 @@ private:
 	Animation* m_aMoveRight;
 
 	Animation* m_animation;
+
 };
 

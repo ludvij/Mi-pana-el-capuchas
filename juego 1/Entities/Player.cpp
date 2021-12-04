@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Wand.h"
 
 Player::Player(int x, int y)
 	: Entity("rcs/player/player.png", x, y, Game::Get().CellSizeX, Game::Get().CellSizeY),
@@ -14,6 +15,8 @@ Player::Player(int x, int y)
 	m_aMoveFront = new Animation("rcs/player/player_move_front.png", width, height, 18, 4, true);
 	m_aMoveLeft  = new Animation("rcs/player/player_move_left.png",  width, height, 18, 4, true);
 	m_aMoveRight = new Animation("rcs/player/player_move_right.png", width, height, 18, 4, true);
+
+	Weapon = new Wand(x, y);
 
 	m_animation = m_aIdleFront;
 }
@@ -39,8 +42,6 @@ void Player::MoveY(float multiplier) {
 }
 
 void Player::Update() {
-
-
 	bool endAnimation = m_animation->Update();
 	if (Vec.x != 0 || Vec.y != 0)
 		state = State::MOVING;
@@ -97,11 +98,12 @@ void Player::Update() {
 		break;
 	case State::DEAD:
 		break;
-	case State::SHOOTING:
-		break;
 	default:
 		break;
 	}
+	Weapon->x = x;
+	Weapon->y = y;
+	Weapon->Update();
 }
 
 void Player::Draw(float scrollX)
@@ -111,4 +113,5 @@ void Player::Draw(float scrollX)
 	else {
 		m_animation->Draw(x - scrollX, y);
 	}
+	Weapon->Draw(scrollX);
 }

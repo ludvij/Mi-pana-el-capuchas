@@ -1,4 +1,4 @@
-#include "Entities/Entity.h"
+#include "Entity.h"
 
 
 Entity::Entity(std::string_view filename, int x, int y, int width, int height)
@@ -7,13 +7,14 @@ Entity::Entity(std::string_view filename, int x, int y, int width, int height)
 	m_texture = Game::Get().GetTexture(filename);
 	// get texture size
 	SDL_QueryTexture(m_texture, nullptr, nullptr, &m_texSize.x, &m_texSize.y);
+	// for comparation
+	if(UuidCreate(&m_uuid) != RPC_S_OK) {
+		LOG_ERROR("Error creating UUID");
+	}
+	
 }
 
-Entity::Entity(int x, int y)
-	: x(x), y(y), width(0), height(0)
-{
 
-}
 
 void Entity::Draw(float scrollX)
 {
@@ -57,5 +58,13 @@ bool Entity::IsInrender(float scrollX)
 		return true;
 	}
 	return false;
+}
+
+bool Entity::operator==(Entity ent)
+{
+	RPC_STATUS status;
+	int res = UuidCompare(&m_uuid, &(ent.m_uuid), &status);
+	if (status != RPC_S_OK) LOG_ERROR("Error occured comparing uuids");
+	return res;
 }
 

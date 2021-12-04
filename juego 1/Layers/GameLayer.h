@@ -3,7 +3,8 @@
 #include "Layers/Layer.h"
 #include "Entities/Player.h"
 #include "Physics/space.h"
-#include "Entities/TIle.h"
+#include "Entities/Tile.h"
+#include "Entities/Projectile.h"
 
 #include <list>
 
@@ -30,6 +31,7 @@ public: // maybe change it to private
 	SDL_GameController* controller;
 	Space space;
 	std::list<Tile*> tiles;
+	std::list<Projectile*> projectiles;
 
 
 private:
@@ -48,9 +50,14 @@ private:
 
 	int mapRangeControls(int stick);
 
+	void updateCollisions();
+
+
 private:
 	int m_controlMoveX = 0;
 	int m_controlMoveY = 0;
+
+	bool m_controlShoot = false;
 
 	int m_mapWidth;
 	int m_mapHeight;

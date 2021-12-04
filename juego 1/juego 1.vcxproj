@@ -180,10 +180,13 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Layers\GameLayer.h" />
     <ClInclude Include="Layers\Layer.h" />
-    <ClInclude Include="Physics\Quadtree.h" />
     <ClInclude Include="Entities\Tile.h" />
     <ClInclude Include="Entities\Player.h" />
+    <ClInclude Include="Physics\Quadtree.h" />
     <ClInclude Include="Physics\Space.h" />
+    <ClInclude Include="Entities\Weapon.h" />
+    <ClInclude Include="Entities\Projectile.h" />
+    <ClInclude Include="Entities\Wand.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Entities\Animation.cpp" />
@@ -195,6 +198,9 @@
     <ClCompile Include="Entities\Tile.cpp" />
     <ClCompile Include="Entities\Player.cpp" />
     <ClCompile Include="Physics\Space.cpp" />
+    <ClCompile Include="Entities\Weapon.cpp" />
+    <ClCompile Include="Entities\Projectile.cpp" />
+    <ClCompile Include="Entities\Wand.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="rcs\player.png" />
