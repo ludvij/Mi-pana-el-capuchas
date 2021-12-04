@@ -175,7 +175,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Entities\Bow.h" />
+    <ClInclude Include="Entities\Enemies\CyanEnemy.h" />
+    <ClInclude Include="Entities\Enemies\Enemy.h" />
+    <ClInclude Include="Entities\Weapons\Bow.h" />
     <ClInclude Include="Entities\Animation.h" />
     <ClInclude Include="Entities\Entity.h" />
     <ClInclude Include="Game.h" />
@@ -184,13 +186,15 @@
     <ClInclude Include="Entities\Tile.h" />
     <ClInclude Include="Entities\Player.h" />
     <ClInclude Include="Physics\Space.h" />
-    <ClInclude Include="Entities\Weapon.h" />
+    <ClInclude Include="Entities\Weapons\Weapon.h" />
     <ClInclude Include="Entities\Projectile.h" />
-    <ClInclude Include="Entities\Wand.h" />
-    <ClInclude Include="Entities\TripleWand.h" />
+    <ClInclude Include="Entities\Weapons\Wand.h" />
+    <ClInclude Include="Entities\Weapons\TripleWand.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Entities\Bow.cpp" />
+    <ClCompile Include="Entities\Enemies\CyanEnemy.cpp" />
+    <ClCompile Include="Entities\Enemies\Enemy.cpp" />
+    <ClCompile Include="Entities\Weapons\Bow.cpp" />
     <ClCompile Include="Entities\Animation.cpp" />
     <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -200,10 +204,10 @@
     <ClCompile Include="Entities\Tile.cpp" />
     <ClCompile Include="Entities\Player.cpp" />
     <ClCompile Include="Physics\Space.cpp" />
-    <ClCompile Include="Entities\Weapon.cpp" />
+    <ClCompile Include="Entities\Weapons\Weapon.cpp" />
     <ClCompile Include="Entities\Projectile.cpp" />
-    <ClCompile Include="Entities\Wand.cpp" />
-    <ClCompile Include="Entities\TripleWand.cpp" />
+    <ClCompile Include="Entities\Weapons\Wand.cpp" />
+    <ClCompile Include="Entities\Weapons\TripleWand.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="rcs\player.png" />

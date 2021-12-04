@@ -5,6 +5,7 @@
 #include "Physics/space.h"
 #include "Entities/Tile.h"
 #include "Entities/Projectile.h"
+#include "Entities/Enemies/Enemy.h"
 
 #include <list>
 
@@ -32,6 +33,7 @@ public: // maybe change it to private
 	Space space;
 	std::list<Tile*> tiles;
 	std::list<Projectile*> projectiles;
+	std::list<Enemy*> enemies;
 
 
 private:

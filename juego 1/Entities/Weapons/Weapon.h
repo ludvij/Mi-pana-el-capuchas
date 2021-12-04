@@ -1,6 +1,6 @@
 #pragma once
-#include "Entity.h"
-#include "Projectile.h"
+#include "Entities/Entity.h"
+#include "Entities/Projectile.h"
 
 enum class WeaponType {
 	BOW,
@@ -28,6 +28,8 @@ public:
 	bool Ready = true;
 
 	int Uses = -1;
+
+	int damage = 1;
 
 
 protected:

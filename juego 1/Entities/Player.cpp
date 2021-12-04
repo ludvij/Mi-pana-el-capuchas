@@ -1,7 +1,7 @@
 #include "Player.h"
-#include "Wand.h"
-#include "TripleWand.h"
-#include "Bow.h"
+#include "Weapons/Wand.h"
+#include "Weapons/TripleWand.h"
+#include "Weapons/Bow.h"
 
 Player::Player(int x, int y)
 	: Entity("rcs/player/player.png", x, y, Game::Get().CellSizeX, Game::Get().CellSizeY),
@@ -18,9 +18,9 @@ Player::Player(int x, int y)
 	m_aMoveLeft  = new Animation("rcs/player/player_move_left.png",  width, height, 18, 4, true);
 	m_aMoveRight = new Animation("rcs/player/player_move_right.png", width, height, 18, 4, true);
 
-	Weapon = new Bow(x, y);
-
 	m_animation = m_aIdleFront;
+
+	Weapon = new Bow(x, y);
 }
 
 Player::~Player()

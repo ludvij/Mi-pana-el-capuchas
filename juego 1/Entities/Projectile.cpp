@@ -1,4 +1,5 @@
 #include "Projectile.h"
+#include "Player.h"
 
 Projectile::Projectile(std::string_view filename, int x, int y, int width, int height, float angle, int pierce, Vector2D velocity)
 	: Entity(filename, x, y, width, height),
@@ -47,6 +48,10 @@ bool Projectile::IsOverlap(Entity* entity)
 				if (*e == *entity) {
 					return true;
 				}
+			}
+			// make sure that this projectile can not harm player if the flag is not set
+			if (!HarmPlayer && *entity == *((Player*)Game::Get().player)) {
+				return true;
 			}
 			m_pierced.push_back(entity);
 			Pierce--;

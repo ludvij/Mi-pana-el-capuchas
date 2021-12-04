@@ -12,7 +12,7 @@
 
 #ifdef _DEBUG
 	#define LOG
-	//#define OUTLINE
+	#define OUTLINE
 #endif // _DEBUG
 
 
@@ -43,8 +43,17 @@ class Layer;
 struct Vector2D {
 	float x;
 	float y;
+
+	inline Vector2D operator+ (float n) { return { x + n, y + n }; }
+	inline Vector2D operator- (float n) { return { x - n, y - n }; }
+	inline Vector2D operator* (float n) { return { x * n, y * n }; }
+	inline Vector2D operator/ (float n) { return { x / n, y / n }; }
+
+	inline Vector2D operator+ (Vector2D& other) { return { x + other.x, y + other.y }; }
+	inline Vector2D operator- (Vector2D& other) { return { x - other.x, y - other.y }; }
+	inline Vector2D operator* (Vector2D& other) { return { x * other.x, y * other.y }; }
+	inline Vector2D operator/ (Vector2D& other) { return { x / other.x, y / other.y }; }
 	
-	inline Vector2D operator*(float n) { return { x * n, y * n };  }
 	inline Vector2D operator- () { return { -x, -y }; };
 };
 
@@ -98,6 +107,8 @@ public:
 
 	int CellSizeX = Width / 18;
 	int CellSizeY = Height / 18;
+	
+	void* player;
 
 private:
 

@@ -1,4 +1,6 @@
 ﻿#include "Layers/GameLayer.h"
+#include "Entities/Enemies/CyanEnemy.h"
+
 #include <algorithm>
 #include <fstream>
 #include <sstream>
@@ -118,6 +120,7 @@ void GameLayer::deleteAll()
 	delete player;
 	space.Clear();
 	while (!tiles.empty())       delete tiles.back(),       tiles.pop_back();
+	while (!enemies.empty())     delete enemies.back(),     enemies.pop_back();
 	while (!projectiles.empty()) delete projectiles.back(), projectiles.pop_back();
 }
 
@@ -162,6 +165,8 @@ void GameLayer::Init() {
 	deleteAll();
 	space = Space();
 	loadMap("rcs/maps/map2");
+	auto c = new CyanEnemy(10 * Game::Get().CellSizeX + Game::Get().CellSizeX/2, 10 * Game::Get().CellSizeY + Game::Get().CellSizeY/2);
+	enemies.push_back(c);
 }
 
 void GameLayer::Draw()
@@ -169,6 +174,9 @@ void GameLayer::Draw()
 
 	for (const auto& tile : tiles) {
 		tile->Draw();
+	}
+	for (const auto& enemy : enemies) {
+		enemy->Draw();
 	}
 	player->Draw();
 	for (const auto& p : projectiles) p->Draw();
@@ -178,9 +186,10 @@ void GameLayer::Draw()
 void GameLayer::Update()
 {
 
-	for (const auto& p : projectiles) p->Update();
-	player->Update();
 	space.Update();
+	for (const auto& p : projectiles) p->Update();
+	for (const auto& e : enemies) e->Update();
+	player->Update();
 
 	updateCollisions();
 }
@@ -302,6 +311,8 @@ void GameLayer::loadMapObj(char character, int x, int y)
 		// modificaci�n para empezar a contar desde el suelo.
 		player->y = player->y - player->height / 2;
 		space.AddDynamicEntity(player);
+		// keep reference that all classes can access;
+		Game::Get().player = player;
 		[[fallthrough]];
 	}
 	case '.': {
