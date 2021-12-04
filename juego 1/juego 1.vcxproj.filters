@@ -66,8 +66,11 @@
     <ClInclude Include="Entities\Wand.h">
       <Filter>Header Files\Entity\Weapons</Filter>
     </ClInclude>
-    <ClInclude Include="Physics\Quadtree.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Entities\Bow.h">
+      <Filter>Header Files\Entity\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\TripleWand.h">
+      <Filter>Header Files\Entity\Weapons</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +108,12 @@
       <Filter>Source Files\Entities\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="Entities\Wand.cpp">
+      <Filter>Source Files\Entities\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Bow.cpp">
+      <Filter>Source Files\Entities\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\TripleWand.cpp">
       <Filter>Source Files\Entities\Weapons</Filter>
     </ClCompile>
   </ItemGroup>

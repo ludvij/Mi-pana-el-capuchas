@@ -8,6 +8,7 @@ class Projectile : public Entity
 public:
 	Projectile(std::string_view filename, int x, int y, int width, int height, float angle, int pierce, Vector2D velocity);
 
+
 	int Pierce;
 	float Angle;
 

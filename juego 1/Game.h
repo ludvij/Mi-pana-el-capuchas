@@ -43,6 +43,9 @@ class Layer;
 struct Vector2D {
 	float x;
 	float y;
+	
+	inline Vector2D operator*(float n) { return { x * n, y * n };  }
+	inline Vector2D operator- () { return { -x, -y }; };
 };
 
 enum class Input {

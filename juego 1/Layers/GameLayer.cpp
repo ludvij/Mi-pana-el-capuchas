@@ -223,10 +223,12 @@ void GameLayer::ProcessControls(SDL_Event event)
 	player->MoveY(speedMultY);
 
 	if (m_controlShoot) {
-		auto p = player->Weapon->Use();
-		if (p != nullptr) {
-			projectiles.push_back(p);
-			space.AddProjectile(p);
+		auto ps = player->Weapon->Use();
+		if (ps.size() != 0) {
+			for (const auto& p : ps) {
+				projectiles.push_back(p);
+				space.AddProjectile(p);
+			}
 			m_controlShoot = false;
 		}
 	}

@@ -5,6 +5,7 @@
 enum class WeaponType {
 	BOW,
 	WAND,
+	TRIPLE_WAND,
 	NONE
 };
 
@@ -14,7 +15,7 @@ public:
 	Weapon(std::string_view filename, int x, int y, int width, int height);
 	~Weapon() {};
 
-	virtual Projectile* Use() = 0;
+	virtual std::list<Projectile*> Use() = 0;
 
 	virtual void Update() = 0;
 
@@ -24,9 +25,11 @@ public:
 
 	float Angle = 0.0f;
 
-	int ShotTime = -1;
 	bool Ready = true;
 
-private:
+
+protected:
+	int shotTime = -1;
+	float projectileSpeed;
 };
 

@@ -3,35 +3,29 @@
 Wand::Wand(int x, int y)
 	: Weapon("rcs/player/weapons/weapon_wand.png", x, y, Game::Get().CellSizeX, Game::Get().CellSizeY)
 {
-	ShotTime = 30;
+	shotTime = 30;
+	projectileSpeed = 10;
 }
 
-Projectile* Wand::Use()
+std::list<Projectile*> Wand::Use()
 {
+	std::list<Projectile*> res;
 	if (Ready == true) {
 		Ready = false;
 		// sdl uses degree but c++ uses radians
 		float angle = Angle / 180.0f * static_cast<float>(M_PI);
-		Vector2D vel = { -std::cosf(angle) * 10, -std::sinf(angle) * 10 };
-		return new Projectile(
-			"rcs/player/weapons/projectile_wand.png",
-			x,			// X center
-			y,			// Y center
-			width / 2,	// Width
-			height / 2,	// Height
-			Angle,		// Angle
-			2,			// Pierce 
-			vel			// Velocity
-		);
+		Vector2D vel = { std::cosf(angle),std::sinf(angle) };
+		vel = -vel * projectileSpeed;
+		res.push_back(new Projectile("rcs/player/weapons/projectile_wand.png", x, y, width / 2, height / 2, Angle, 1, vel));
 	}
-	return nullptr;
+	return res;
 }
 
 void Wand::Update()
 {
-	if (!Ready) ShotTime--;
-	if (ShotTime <= 0) {
+	if (!Ready) shotTime--;
+	if (shotTime <= 0) {
 		Ready = true;
-		ShotTime = 30;
+		shotTime = 30;
 	}
 }
