@@ -4,6 +4,7 @@ Wand::Wand(int x, int y)
 	: Weapon("rcs/player/weapons/weapon_wand.png", x, y, Game::Get().CellSizeX, Game::Get().CellSizeY)
 {
 	shotTime = 30;
+	Ready = false;
 	projectileSpeed = 10;
 }
 

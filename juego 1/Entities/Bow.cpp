@@ -4,6 +4,7 @@ Bow::Bow(int x, int y)
 {
 	shotTime = 30;
 	projectileSpeed = 15;
+	Uses = 10;
 }
 
 std::list<Projectile*> Bow::Use()
@@ -11,6 +12,7 @@ std::list<Projectile*> Bow::Use()
 	std::list<Projectile*> res;
 	if (Ready == true) {
 		Ready = false;
+		Uses--;
 		// sdl uses degree but c++ uses radians
 		float angle = Angle / 180.0f * static_cast<float>(M_PI);
 		Vector2D vel = { std::cosf(angle), std::sinf(angle)};

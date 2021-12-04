@@ -18,7 +18,7 @@ Player::Player(int x, int y)
 	m_aMoveLeft  = new Animation("rcs/player/player_move_left.png",  width, height, 18, 4, true);
 	m_aMoveRight = new Animation("rcs/player/player_move_right.png", width, height, 18, 4, true);
 
-	Weapon = new TripleWand(x, y);
+	Weapon = new Bow(x, y);
 
 	m_animation = m_aIdleFront;
 }
@@ -103,9 +103,16 @@ void Player::Update() {
 	default:
 		break;
 	}
-	Weapon->x = x;
-	Weapon->y = y;
-	Weapon->Update();
+	if (Weapon->Uses == 0) {
+		delete Weapon;
+		Weapon = new Wand(x, y);
+	}
+	else {
+		Weapon->x = x;
+		Weapon->y = y;
+		Weapon->Update();
+
+	}
 }
 
 void Player::Draw(float scrollX)

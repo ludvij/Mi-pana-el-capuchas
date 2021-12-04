@@ -27,6 +27,8 @@ public:
 
 	bool Ready = true;
 
+	int Uses = -1;
+
 
 protected:
 	int shotTime = -1;
