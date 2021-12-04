@@ -7,10 +7,15 @@ Space::Space()
 
 void Space::AddDynamicEntity(Entity* entity) { dynamicEntities.push_back(entity); }
 void Space::AddStaticEntity(Entity* entity) { staticEntities.push_back(entity); }
-void Space::RemoveDynamicEntity(Entity* entity) { dynamicEntities.remove(entity); }
+void Space::RemoveDynamicEntity(Entity* entity) {
+	RemoveProjectile(entity);
+	dynamicEntities.remove(entity); 
+}
 void Space::RemoveStaticEntity(Entity* entity) { staticEntities.remove(entity); }
 
-void Space::AddProjectile(Projectile* proj) { projectiles.push_back(proj);  }
+void Space::AddProjectile(Entity* proj) { projectiles.push_back(proj);  }
+
+void Space::RemoveProjectile(Entity* proj) { projectiles.remove(proj); }
 
 void Space::Clear()
 {
@@ -114,7 +119,7 @@ void Space::updateMoveDown(Entity* dynamicAct) {
 	}
 }
 
-void Space::updateMoveRightProj(Projectile* dynamicAct)
+void Space::updateMoveRightProj(Entity* dynamicAct)
 {
 	if (dynamicAct->Vec.x > 0) {
 		float possibleMovement = dynamicAct->Vec.x;
@@ -149,7 +154,7 @@ void Space::updateMoveRightProj(Projectile* dynamicAct)
 	}
 }
 
-void Space::updateMoveLeftProj(Projectile* dynamicAct)
+void Space::updateMoveLeftProj(Entity* dynamicAct)
 {
 	if (dynamicAct->Vec.x < 0) {
 		float possibleMovement = dynamicAct->Vec.x;
@@ -185,7 +190,7 @@ void Space::updateMoveLeftProj(Projectile* dynamicAct)
 	}
 }
 
-void Space::updateMoveTopProj(Projectile* dynamicAct)
+void Space::updateMoveTopProj(Entity* dynamicAct)
 {
 
 
@@ -225,7 +230,7 @@ void Space::updateMoveTopProj(Projectile* dynamicAct)
 }
 
 
-void Space::updateMoveDownProj(Projectile* dynamicAct)
+void Space::updateMoveDownProj(Entity* dynamicAct)
 {
 	if (dynamicAct->Vec.y > 0) {
 

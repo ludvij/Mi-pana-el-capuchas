@@ -150,9 +150,11 @@ void GameLayer::updateCollisions()
 	for (const auto& p : projectiles) {
 		if (!p->IsInrender()) {
 			p->Deleted = true;
+			space.RemoveProjectile(p);
 		}
 	}
 	deleteActors(projectiles);
+
 }
 
 
@@ -239,8 +241,8 @@ inline void GameLayer::deleteActors(std::list<T>& list)
 		T ent = *itr;
 		if (ent->Deleted == true)
 		{
-			space.RemoveDynamicEntity(ent);
 			list.erase(itr++);
+			space.RemoveDynamicEntity(ent);
 			delete ent;
 		}
 		else {
