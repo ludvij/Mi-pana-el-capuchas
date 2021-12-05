@@ -23,6 +23,8 @@ public:
 
 	bool operator==(Entity& ent);
 
+	friend std::ostream& operator<< (std::ostream& os, const Entity& vector);
+
 	
 	// position and size
 	float x;

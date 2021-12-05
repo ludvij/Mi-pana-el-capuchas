@@ -1,5 +1,6 @@
 #include "Projectile.h"
 #include "Player.h"
+#include "Layers/GameLayer.h"
 
 Projectile::Projectile(std::string_view filename, int x, int y, int width, int height, float angle, int pierce, Vector2D velocity)
 	: Entity(filename, x, y, width, height),
@@ -41,31 +42,40 @@ void Projectile::Update()
 
 bool Projectile::IsOverlap(Entity* entity)
 {
+	// they are in bounds
 	if (Entity::IsOverlap(entity)) {
-		if (!entity->Pierceable) {
-			Pierce = 0;
-		}
-		else {
-			for (auto itr = m_pierced.begin(); itr != m_pierced.end(); itr++) {
-				Entity* e = *itr;
-				// entity already pierced
+		// entity can be pierced
+		if (entity->Pierceable) {
+			// check if it has been already pierced
+			bool inside = false;
+			for (auto const e : m_pierced) {
 				if (*e == *entity) {
-					return true;
+					inside = true;
 				}
 			}
-			if (*entity == *(Player*)Game::Get().player) {
+			// has been pierced
+			if (!inside) {
+				// can only damage the player
 				if (HarmPlayer) {
+					// is the player
+					if (*entity == *((GameLayer*)Game::Get().layer)->player) {
+						Pierce--;
+						m_pierced.push_back(entity);
+					}
+				}
+				else {
+					if (*entity == *((GameLayer*)Game::Get().layer)->player) 
+						return false;	
 					Pierce--;
 					m_pierced.push_back(entity);
 				}
-				else {
-					m_pierced.push_back(entity);
-				}
+
+				return true;
 			}
 		}
-		return true;
+		else {
+			Pierce = 0;
+		}
 	}
-
-
 	return false;
 }

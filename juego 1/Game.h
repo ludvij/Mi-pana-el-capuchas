@@ -113,6 +113,7 @@ public:
 	int CellSizeY = Height / 18;
 	
 	void* player;
+	Layer* layer = nullptr;
 
 private:
 
@@ -127,7 +128,6 @@ private:
 
 	bool m_loopActive = false;
 
-	Layer* layer = nullptr;
 
 	static Game s_Instance;
 };

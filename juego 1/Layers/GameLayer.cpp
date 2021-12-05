@@ -158,7 +158,14 @@ void GameLayer::updateCollisions()
 		}
 		if (p->HarmPlayer) {
 			if (p->IsOverlap(player)) {
-				//TODO: Damage player
+				
+			}
+		}
+		else {
+			for (const auto& e : enemies) {
+				if (p->IsOverlap(e)) {
+					// damage the enemy
+				}
 			}
 		}
 	}
@@ -172,13 +179,13 @@ void GameLayer::Init() {
 	space = Space();
 	loadMap("rcs/maps/map2");
 	auto c = new CyanEnemy(10 * Game::Get().CellSizeX + Game::Get().CellSizeX/2, 10 * Game::Get().CellSizeY + Game::Get().CellSizeY/2);
-	auto r = new RedEnemy(5 * Game::Get().CellSizeX + Game::Get().CellSizeX / 2, 10 * Game::Get().CellSizeY + Game::Get().CellSizeY / 2);
+	//auto r = new RedEnemy(5 * Game::Get().CellSizeX + Game::Get().CellSizeX / 2, 10 * Game::Get().CellSizeY + Game::Get().CellSizeY / 2);
 	auto vc = new CyanVeteranEnemy(10 * Game::Get().CellSizeX + Game::Get().CellSizeX / 2, 7 * Game::Get().CellSizeY + Game::Get().CellSizeY / 2);
 	enemies.push_back(c);
-	enemies.push_back(r);
+	//enemies.push_back(r);
 	enemies.push_back(vc);
 	space.AddDynamicEntity(c);
-	space.AddDynamicEntity(r);
+	//space.AddDynamicEntity(r);
 	space.AddDynamicEntity(vc);
 }
 

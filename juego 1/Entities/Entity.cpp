@@ -11,6 +11,7 @@ Entity::Entity(std::string_view filename, int x, int y, int width, int height)
 	if(UuidCreate(&m_uuid) != RPC_S_OK) {
 		LOG_ERROR("Error creating UUID");
 	}
+	Pierceable = true;
 	
 }
 
@@ -63,8 +64,18 @@ bool Entity::IsInrender(float scrollX)
 bool Entity::operator==(Entity& ent)
 {
 	RPC_STATUS status;
-	bool res = UuidEqual(&m_uuid, &(ent.m_uuid), &status);
+	bool res = UuidEqual(&m_uuid, &ent.m_uuid, &status);
 	if (status != RPC_S_OK) LOG_ERROR("Error occured comparing uuids");
 	return res;
 }
 
+std::ostream& operator<<(std::ostream& os, const Entity& e)
+{
+	char* str;
+	if (UuidToStringA(&e.m_uuid, reinterpret_cast<RPC_CSTR*>(&str)) != RPC_S_OK) {
+		LOG_ERROR("ERROR CREATING UUID STRING");
+	}
+	os << str;
+	RpcStringFreeA(reinterpret_cast<RPC_CSTR*>(&str));
+	return os;
+}
