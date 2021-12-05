@@ -13,5 +13,7 @@ void Enemy::Draw(float scrollX)
 Projectile* Enemy::Update()
 {
 	bool endAnimation = m_animation->Update();
+	if (Health <= 0)
+		Deleted = true;
 	return nullptr;
 }

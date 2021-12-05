@@ -37,7 +37,7 @@ public:
 
 	bool Pierceable = false;
 
-	bool Deleted;
+	bool Deleted = false;
 
 protected:
 

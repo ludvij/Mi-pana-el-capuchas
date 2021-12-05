@@ -164,13 +164,13 @@ void GameLayer::updateCollisions()
 		else {
 			for (const auto& e : enemies) {
 				if (p->IsOverlap(e)) {
-					// damage the enemy
+					e->Health--;
 				}
 			}
 		}
 	}
 	deleteActors(projectiles);
-
+	deleteActors(enemies);
 }
 
 

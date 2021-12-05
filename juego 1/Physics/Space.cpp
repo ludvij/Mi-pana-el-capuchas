@@ -34,14 +34,15 @@ void Space::Update() {
 	while (itr != projectiles.end())
 	{
 		Entity* p = *itr;
-		updateMoveRightProj(p);
-		updateMoveLeftProj(p);
-		updateMoveTopProj(p);
-		updateMoveDownProj(p);
 		if (p->Deleted)
 			projectiles.erase(itr++);
-		else
+		else {
+			updateMoveRightProj(p);
+			updateMoveLeftProj(p);
+			updateMoveTopProj(p);
+			updateMoveDownProj(p);
 			itr++;
+		}
 	}
 
 }
