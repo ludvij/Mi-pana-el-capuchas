@@ -35,6 +35,7 @@ void HUD::UpdateHearts(Player* player)
 {
 
 	int idx = player->Health / 2;
+	if (idx <= 0) idx = 0;
 	for (int i = 0; i < 5; i++) {
 		delete hearts[i];
 		if (i < idx) {

@@ -8,6 +8,7 @@ RedEnemy::RedEnemy(int x, int y)
 	m_aIdle = new Animation("rcs/enemies/enemy_red_idle.png", width, height, 18, 3, true);
 	m_aDying = new Animation("rcs/enemies/enemy_red_dying.png", width, height, 18, 3, false);
 	m_animation = m_aIdle;
+	collisionDMG = 3;
 	Health = 1;
 }
 
@@ -46,4 +47,15 @@ Projectile* RedEnemy::Update()
 	Vec = velocity / std::sqrtf(velocity.DistanceSquared()) * 5;
 
 	return nullptr;
+}
+
+bool RedEnemy::IsOverlap(Entity* ent)
+{
+	if (Entity::IsOverlap(ent)) {
+		if (*ent == *((GameLayer*)Game::Get().layer)->player) {
+			Health = 0;
+		}
+		return true;
+	}
+	return false;
 }

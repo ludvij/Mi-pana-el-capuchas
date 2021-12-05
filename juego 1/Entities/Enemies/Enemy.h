@@ -18,6 +18,7 @@ public:
 
 	int Health = 0;
 	int ShotTime = -1;
+	int collisionDMG = 1;
 	State state = State::MOVING;
 
 protected:

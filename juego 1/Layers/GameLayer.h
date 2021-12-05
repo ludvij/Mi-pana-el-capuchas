@@ -57,6 +57,8 @@ private:
 
 	void updateCollisions();
 
+	int level = 0;
+	long time = 0;
 
 private:
 	int m_controlMoveX = 0;

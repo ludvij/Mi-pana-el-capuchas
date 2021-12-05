@@ -15,6 +15,10 @@ GameLayer::GameLayer()
 GameLayer::~GameLayer()
 {
 	deleteAll();
+	delete player;
+	if (controller) {
+		SDL_GameControllerClose(controller);
+	}
 }
 
 void GameLayer::keysToControls(SDL_Event event)
@@ -129,11 +133,11 @@ void GameLayer::gamepadToControls(SDL_Event event)
 // use to delete all resources in the class
 void GameLayer::deleteAll()
 {
-	delete player;
-	space.Clear();
-	while (!tiles.empty())       delete tiles.back(),       tiles.pop_back();
-	while (!enemies.empty())     delete enemies.back(),     enemies.pop_back();
-	while (!projectiles.empty()) delete projectiles.back(), projectiles.pop_back();
+	space.Clear();				    
+	while (!tiles.empty())          delete tiles.back(),          tiles.pop_back();
+	while (!enemies.empty())        delete enemies.back(),        enemies.pop_back();
+	while (!projectiles.empty())    delete projectiles.back(),    projectiles.pop_back();
+	while (!droppedWeapons.empty()) delete droppedWeapons.back(), droppedWeapons.pop_back();
 }
 
 
@@ -188,6 +192,12 @@ void GameLayer::updateCollisions()
 				droppedWeapons.push_back(drop);
 			}
 		}
+		else if (e->state == State::MOVING) {
+			if (e->IsOverlap(player)) {
+				player->Health -= e->collisionDMG;
+				hud.UpdateHearts(player);
+			}
+		}
 	}
 
 	for (const auto& d : droppedWeapons) {
@@ -217,17 +227,12 @@ void GameLayer::updateCollisions()
 void GameLayer::Init() {
 	deleteAll();
 	space = Space();
-	loadMap("rcs/maps/map2");
+	loadMap("rcs/maps/map" + std::to_string(level % 3 + 1));
 	hud.UpdateHearts(player);
-	auto c = new CyanEnemy(10 * Game::Get().CellSizeX + Game::Get().CellSizeX/2, 10 * Game::Get().CellSizeY + Game::Get().CellSizeY/2);
-	//auto r = new RedEnemy(5 * Game::Get().CellSizeX + Game::Get().CellSizeX / 2, 10 * Game::Get().CellSizeY + Game::Get().CellSizeY / 2);
-	auto vc = new CyanVeteranEnemy(10 * Game::Get().CellSizeX + Game::Get().CellSizeX / 2, 7 * Game::Get().CellSizeY + Game::Get().CellSizeY / 2);
-	enemies.push_back(c);
-	//enemies.push_back(r);
-	enemies.push_back(vc);
-	space.AddDynamicEntity(c);
-	//space.AddDynamicEntity(r);
-	space.AddDynamicEntity(vc);
+	auto r = new RedEnemy(5 * Game::Get().CellSizeX + Game::Get().CellSizeX / 2, 10 * Game::Get().CellSizeY + Game::Get().CellSizeY / 2);
+	enemies.push_back(r);
+	space.AddDynamicEntity(r);
+
 }
 
 void GameLayer::Draw()
@@ -251,7 +256,11 @@ void GameLayer::Draw()
 
 void GameLayer::Update()
 {
-
+	// level cleared
+	if (enemies.size() == 0) {
+		level++;
+		Init();
+	}
 	space.Update();
 	for (const auto& p : projectiles) p->Update();
 	for (const auto& e : enemies) {
@@ -269,6 +278,7 @@ void GameLayer::Update()
 		Game::Get().layer = Game::Get().endLayer;
 		Init();
 	}
+	time++;
 }
 
 void GameLayer::ProcessControls(SDL_Event event)
@@ -277,19 +287,29 @@ void GameLayer::ProcessControls(SDL_Event event)
 	if (event.type == SDL_CONTROLLERDEVICEADDED) {
 		controller = SDL_GameControllerOpen(0);
 		if (controller == nullptr) {
-			//LOG_ERROR("\terror en GamePad");
+			LOG_ERROR("error en GamePad");
 		}
 		else {
-			//LOG_TRACE("\tGamepad conectado");
+			LOG_INFO("Gamepad conectado");
 		}
 	}
 
 	// Cambio automático de input
 	switch (event.type) {
 	case SDL_CONTROLLERBUTTONDOWN: [[fallthrough]];
-	case SDL_CONTROLLERAXISMOTION:
+	case SDL_CONTROLLERAXISMOTION: {
+		if (!controller) {
+			controller = SDL_GameControllerOpen(0);
+			if (controller == nullptr) {
+				LOG_ERROR("error en GamePad");
+			}
+			else {
+				LOG_INFO("Gamepad conectado");
+			}
+		}
 		Game::Get().Input = Input::CONTROLLER;
 		break;
+	}
 	case SDL_MOUSEBUTTONDOWN: [[fallthrough]];
 	case SDL_MOUSEMOTION:     [[fallthrough]];
 	case SDL_KEYDOWN:
@@ -386,9 +406,14 @@ void GameLayer::loadMapObj(char character, int x, int y)
 		break;
 	}
 	case '1': {
-		player = new Player(x, y);
+		if (player == nullptr) {
+			player = new Player(x, y);
+		}
+		else {
+			player->x = x;
+		}
 		// modificaci�n para empezar a contar desde el suelo.
-		player->y = player->y - player->height / 2;
+		player->y = y - player->height / 2;
 		space.AddDynamicEntity(player);
 		[[fallthrough]];
 	}

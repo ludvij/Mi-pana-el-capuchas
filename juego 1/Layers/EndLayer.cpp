@@ -1,4 +1,5 @@
 #include "EndLayer.h"
+#include "Layers/GameLayer.h"
 
 EndLayer::EndLayer()
 	: background("rcs/game_over.png",
@@ -59,6 +60,7 @@ void EndLayer::ProcessControls(SDL_Event event)
 	//procesar controles, solo tiene uno
 	if (controlContinue) {
 		// Cambia la capa
+		Game::Get().gameLayer = new GameLayer();
 		Game::Get().layer = Game::Get().gameLayer;
 		controlContinue = false;
 	}

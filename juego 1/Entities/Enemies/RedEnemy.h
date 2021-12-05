@@ -6,5 +6,7 @@ public:
 	RedEnemy(int x, int y);
 
 	virtual Projectile* Update() override;
+
+	virtual bool IsOverlap(Entity* ent) override;
 };
 
