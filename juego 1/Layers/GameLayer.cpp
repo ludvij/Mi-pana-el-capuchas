@@ -23,11 +23,9 @@ void GameLayer::keysToControls(SDL_Event event)
 		int code = event.key.keysym.sym;
 		// Pulsada
 		switch (code) {
-#ifdef _DEBUG
 		case SDLK_ESCAPE:
 			Game::Get().Stop();
 			break;
-#endif // _DEBUG
 		case SDLK_d: // derecha
 			m_controlMoveX = MAX_MAP_POS;
 			break;
@@ -67,6 +65,18 @@ void GameLayer::keysToControls(SDL_Event event)
 			}
 			break;
 		}
+	}
+
+	int motionX = event.motion.x; /// game->scaleLower;
+	int motionY = event.motion.y; /// game->scaleLower;
+	// Cada vez que hacen click
+	if (event.type == SDL_MOUSEMOTION) {
+		Vector2D dst = { player->x - motionX, player->y - motionY };
+		float tangent = std::atan2f(dst.y, dst.x) * 180.0f / static_cast<float>(M_PI);
+		player->Weapon->Angle = tangent;
+	}
+	else if (event.type == SDL_MOUSEBUTTONDOWN) {
+		m_controlShoot = true;
 	}
 }
 
@@ -276,11 +286,12 @@ void GameLayer::ProcessControls(SDL_Event event)
 
 	// Cambio automático de input
 	switch (event.type) {
-	case SDL_CONTROLLERBUTTONDOWN:
-		[[fallthrough]];
+	case SDL_CONTROLLERBUTTONDOWN: [[fallthrough]];
 	case SDL_CONTROLLERAXISMOTION:
 		Game::Get().Input = Input::CONTROLLER;
 		break;
+	case SDL_MOUSEBUTTONDOWN: [[fallthrough]];
+	case SDL_MOUSEMOTION:     [[fallthrough]];
 	case SDL_KEYDOWN:
 		Game::Get().Input = Input::KEYBOARD;
 		break;

@@ -22,7 +22,7 @@ Weapon* Enemy::Drop()
 {
 	// drop rate is 15%
 	int rnd = Game::Get().randomInt(1, 100);
-	if (rnd <= 75) {
+	if (rnd <= 15) {
 		int w = Game::Get().randomInt(1, 2);
 		if (w == 1)
 			return new TripleWand(x, y);
