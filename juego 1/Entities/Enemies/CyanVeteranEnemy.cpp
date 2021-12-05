@@ -37,7 +37,7 @@ Projectile* CyanVeteranEnemy::Update()
 		ShotTime = 90;
 		Vector2D velocity = -dst;
 		// magi number to predict movement
-		velocity = velocity +p->Vec * 30;
+		velocity = velocity +p->Vec * 35;
 
 		velocity = velocity / std::sqrtf(velocity.DistanceSquared()) * 7;
 		auto p = new Projectile("rcs/player/weapons/projectile_triple_wand.png",

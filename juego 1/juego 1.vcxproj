@@ -191,6 +191,7 @@
     <ClInclude Include="Entities\Projectile.h" />
     <ClInclude Include="Entities\Weapons\Wand.h" />
     <ClInclude Include="Entities\Weapons\TripleWand.h" />
+    <ClInclude Include="Entities\Enemies\RedEnemy.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Entities\Enemies\CyanVeteranEnemy.cpp" />
@@ -210,6 +211,7 @@
     <ClCompile Include="Entities\Projectile.cpp" />
     <ClCompile Include="Entities\Weapons\Wand.cpp" />
     <ClCompile Include="Entities\Weapons\TripleWand.cpp" />
+    <ClCompile Include="Entities\Enemies\RedEnemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="rcs\player.png" />

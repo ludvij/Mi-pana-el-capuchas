@@ -12,7 +12,7 @@
 
 #ifdef _DEBUG
 	#define LOG
-	#define OUTLINE
+	//#define OUTLINE
 #endif // _DEBUG
 
 
