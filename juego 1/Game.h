@@ -114,6 +114,10 @@ public:
 
 	Layer* layer = nullptr;
 
+	Layer* gameLayer = nullptr;
+	Layer* endLayer = nullptr;
+	Layer* menuLayer = nullptr;
+	Layer* intersectionLayer = nullptr;
 private:
 
 	Game();

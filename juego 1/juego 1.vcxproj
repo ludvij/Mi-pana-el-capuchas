@@ -175,6 +175,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Layers\EndLayer.h" />
     <ClInclude Include="Entities\Enemies\CyanVeteranEnemy.h" />
     <ClInclude Include="Entities\Enemies\CyanEnemy.h" />
     <ClInclude Include="Entities\Enemies\Enemy.h" />
@@ -195,6 +196,7 @@
     <ClInclude Include="Entities\Enemies\RedEnemy.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Layers\EndLayer.cpp" />
     <ClCompile Include="Entities\Enemies\CyanVeteranEnemy.cpp" />
     <ClCompile Include="Entities\Enemies\CyanEnemy.cpp" />
     <ClCompile Include="Entities\Enemies\Enemy.cpp" />

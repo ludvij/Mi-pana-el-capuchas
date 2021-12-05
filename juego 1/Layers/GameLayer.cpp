@@ -255,8 +255,10 @@ void GameLayer::Update()
 	hud.UpdateFrame(player);
 
 	updateCollisions();
-	if (player->Health <= 0)
+	if (player->Health <= 0) {
+		Game::Get().layer = Game::Get().endLayer;
 		Init();
+	}
 }
 
 void GameLayer::ProcessControls(SDL_Event event)

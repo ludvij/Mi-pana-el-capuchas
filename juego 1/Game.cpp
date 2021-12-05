@@ -1,6 +1,7 @@
 #include "Game.h"
 
 #include "Layers/GameLayer.h"
+#include "Layers/EndLayer.h"
 
 Game Game::s_Instance;
 
@@ -61,7 +62,10 @@ Game::Game()
 	std::random_device device;
 	m_mt = std::mt19937(device());
 
-	layer = new GameLayer();
+	gameLayer = new GameLayer();
+	endLayer = new EndLayer();
+
+	layer = gameLayer;
 }
 
 void Game::processGameEvents()
