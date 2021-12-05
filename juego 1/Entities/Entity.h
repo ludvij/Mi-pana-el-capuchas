@@ -21,12 +21,12 @@ public:
 	bool IsInrender(float scrollX = 0);
 
 
-	bool operator==(Entity ent);
+	bool operator==(Entity& ent);
 
 	
 	// position and size
-	int x;
-	int y;
+	float x;
+	float y;
 	int width;
 	int height;
 

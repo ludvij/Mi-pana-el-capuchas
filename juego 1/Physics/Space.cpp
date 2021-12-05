@@ -52,15 +52,15 @@ void Space::updateMoveTop(Entity* dynamicAct) {
 		// El mejor "idealmente" Vec.y partimos de ese
 
 		for (auto const& staticAct : staticEntities) {
-			int topDynamic = dynamicAct->y - dynamicAct->height / 2;
-			int downDynamic = dynamicAct->y + dynamicAct->height / 2;
-			int rightDynamic = dynamicAct->x + dynamicAct->width / 2;
-			int leftDynamic = dynamicAct->x - dynamicAct->width / 2;
+			float topDynamic = dynamicAct->y - dynamicAct->height / 2;
+			float downDynamic = dynamicAct->y + dynamicAct->height / 2;
+			float rightDynamic = dynamicAct->x + dynamicAct->width / 2;
+			float leftDynamic = dynamicAct->x - dynamicAct->width / 2;
 
-			int topStatic = staticAct->y - staticAct->height / 2;
-			int downStatic = staticAct->y + staticAct->height / 2;
-			int rightStatic = staticAct->x + staticAct->width / 2;
-			int leftStatic = staticAct->x - staticAct->width / 2;
+			float topStatic = staticAct->y - staticAct->height / 2;
+			float downStatic = staticAct->y + staticAct->height / 2;
+			float rightStatic = staticAct->x + staticAct->width / 2;
+			float leftStatic = staticAct->x - staticAct->width / 2;
 
 			// Alerta!, Elemento est�tico en la trayectoria.
 			if ((topDynamic + dynamicAct->Vec.y) <= downStatic
@@ -73,12 +73,12 @@ void Space::updateMoveTop(Entity* dynamicAct) {
 				if (possibleMovement <= downStatic - topDynamic) {
 					// La distancia es MENOR que nuestro movimiento posible
 					// Tenemos que actualizar el movimiento posible a uno menor
-					possibleMovement = static_cast<float>(downStatic - topDynamic);
+					possibleMovement = downStatic - topDynamic;
 				}
 			}
 		}
 		// Ya se han comprobado todos los est�ticos
-		dynamicAct->y = dynamicAct->y + static_cast<int>(possibleMovement);
+		dynamicAct->y = dynamicAct->y + possibleMovement;
 		// Restringir la velocidad actual (opcional)
 		dynamicAct->Vec.y = possibleMovement;
 	}
@@ -92,15 +92,15 @@ void Space::updateMoveDown(Entity* dynamicAct) {
 		// El mejor "idealmente" Vec.y partimos de ese
 
 		for (auto const& staticAct : staticEntities) {
-			int topDynamic = dynamicAct->y - dynamicAct->height / 2;
-			int downDynamic = dynamicAct->y + dynamicAct->height / 2;
-			int rightDynamic = dynamicAct->x + dynamicAct->width / 2;
-			int leftDynamic = dynamicAct->x - dynamicAct->width / 2;
+			float topDynamic = dynamicAct->y - dynamicAct->height / 2;
+			float downDynamic = dynamicAct->y + dynamicAct->height / 2;
+			float rightDynamic = dynamicAct->x + dynamicAct->width / 2;
+			float leftDynamic = dynamicAct->x - dynamicAct->width / 2;
 
-			int topStatic = staticAct->y - staticAct->height / 2;
-			int downStatic = staticAct->y + staticAct->height / 2;
-			int rightStatic = staticAct->x + staticAct->width / 2;
-			int leftStatic = staticAct->x - staticAct->width / 2;
+			float topStatic = staticAct->y - staticAct->height / 2;
+			float downStatic = staticAct->y + staticAct->height / 2;
+			float rightStatic = staticAct->x + staticAct->width / 2;
+			float leftStatic = staticAct->x - staticAct->width / 2;
 
 			// Alerta!, Elemento est�tico en la trayectoria.
 			if ((downDynamic + dynamicAct->Vec.y) >= topStatic
@@ -112,12 +112,12 @@ void Space::updateMoveDown(Entity* dynamicAct) {
 				if (possibleMovement >= topStatic - downDynamic) {
 					// La distancia es MENOR que nuestro movimiento posible
 					// Tenemos que actualizar el movimiento posible a uno menor
-					possibleMovement = static_cast<float>(topStatic - downDynamic);
+					possibleMovement = topStatic - downDynamic;
 				}
 			}
 		}
 		// Ya se han comprobado todos los est�ticos
-		dynamicAct->y = dynamicAct->y + static_cast<int>(possibleMovement);
+		dynamicAct->y = dynamicAct->y + possibleMovement;
 		// Restringir la velocidad actual (opcional)
 		dynamicAct->Vec.y = possibleMovement;
 	}
@@ -130,13 +130,13 @@ void Space::updateMoveRightProj(Entity* dynamicAct)
 		// El mejor "idealmente" Vec.x partimos de ese
 
 		for (auto const& staticAct : staticEntities) {
-			int rightDynamic = dynamicAct->x + dynamicAct->width / 2;
-			int topDynamic = dynamicAct->y - dynamicAct->height / 2;
-			int downDynamic = dynamicAct->y + dynamicAct->height / 2;
+			float rightDynamic = dynamicAct->x + dynamicAct->width / 2;
+			float topDynamic = dynamicAct->y - dynamicAct->height / 2;
+			float downDynamic = dynamicAct->y + dynamicAct->height / 2;
 
-			int leftStatic = staticAct->x - staticAct->width / 2;
-			int topStatic = staticAct->y - staticAct->height / 2;
-			int downStatic = staticAct->y + staticAct->height / 2;
+			float leftStatic = staticAct->x - staticAct->width / 2;
+			float topStatic = staticAct->y - staticAct->height / 2;
+			float downStatic = staticAct->y + staticAct->height / 2;
 
 			// Alerta!, Elemento est�tico en la trayectoria.
 			if ((rightDynamic + dynamicAct->Vec.x) >= leftStatic
@@ -152,7 +152,7 @@ void Space::updateMoveRightProj(Entity* dynamicAct)
 			}
 		}
 		// Ya se han comprobado todos los est�ticos
-		dynamicAct->x = dynamicAct->x + static_cast<int>(possibleMovement);
+		dynamicAct->x = dynamicAct->x + possibleMovement;
 		// Restringir la velocidad actual (opcional)
 		dynamicAct->Vec.x = possibleMovement;
 	}
@@ -165,12 +165,12 @@ void Space::updateMoveLeftProj(Entity* dynamicAct)
 		// El mejor "idealmente" Vec.x partimos de ese
 
 		for (auto const& staticAct : staticEntities) {
-			int leftDynamic = dynamicAct->x - dynamicAct->width / 2;
-			int topDynamic = dynamicAct->y - dynamicAct->height / 2;
-			int downDynamic = dynamicAct->y + dynamicAct->height / 2;
-			int rightStatic = staticAct->x + staticAct->width / 2;
-			int topStatic = staticAct->y - staticAct->height / 2;
-			int downStatic = staticAct->y + staticAct->height / 2;
+			float leftDynamic = dynamicAct->x - dynamicAct->width / 2;
+			float topDynamic = dynamicAct->y - dynamicAct->height / 2;
+			float downDynamic = dynamicAct->y + dynamicAct->height / 2;
+			float rightStatic = staticAct->x + staticAct->width / 2;
+			float topStatic = staticAct->y - staticAct->height / 2;
+			float downStatic = staticAct->y + staticAct->height / 2;
 
 			// Alerta!, Elemento est�tico en la trayectoria.
 			if ((leftDynamic + dynamicAct->Vec.x) <= rightStatic
@@ -188,7 +188,7 @@ void Space::updateMoveLeftProj(Entity* dynamicAct)
 
 		}
 		// Ya se han comprobado todos los est�ticos
-		dynamicAct->x = dynamicAct->x + static_cast<int>(possibleMovement);
+		dynamicAct->x = dynamicAct->x + possibleMovement;
 		// Restringir la velocidad actual (opcional)
 		dynamicAct->Vec.x = possibleMovement;
 	}
@@ -203,15 +203,15 @@ void Space::updateMoveTopProj(Entity* dynamicAct)
 		// El mejor "idealmente" Vec.y partimos de ese
 
 		for (auto const& staticAct : staticEntities) {
-			int topDynamic = dynamicAct->y - dynamicAct->height / 2;
-			int downDynamic = dynamicAct->y + dynamicAct->height / 2;
-			int rightDynamic = dynamicAct->x + dynamicAct->width / 2;
-			int leftDynamic = dynamicAct->x - dynamicAct->width / 2;
+			float topDynamic = dynamicAct->y - dynamicAct->height / 2;
+			float downDynamic = dynamicAct->y + dynamicAct->height / 2;
+			float rightDynamic = dynamicAct->x + dynamicAct->width / 2;
+			float leftDynamic = dynamicAct->x - dynamicAct->width / 2;
 
-			int topStatic = staticAct->y - staticAct->height / 2;
-			int downStatic = staticAct->y + staticAct->height / 2;
-			int rightStatic = staticAct->x + staticAct->width / 2;
-			int leftStatic = staticAct->x - staticAct->width / 2;
+			float topStatic = staticAct->y - staticAct->height / 2;
+			float downStatic = staticAct->y + staticAct->height / 2;
+			float rightStatic = staticAct->x + staticAct->width / 2;
+			float leftStatic = staticAct->x - staticAct->width / 2;
 
 			// Alerta!, Elemento est�tico en la trayectoria.
 			if ((topDynamic + dynamicAct->Vec.y) <= downStatic
@@ -227,7 +227,7 @@ void Space::updateMoveTopProj(Entity* dynamicAct)
 			}
 		}
 		// Ya se han comprobado todos los est�ticos
-		dynamicAct->y = dynamicAct->y + static_cast<int>(possibleMovement);
+		dynamicAct->y = dynamicAct->y + possibleMovement;
 		// Restringir la velocidad actual (opcional)
 		dynamicAct->Vec.y = possibleMovement;
 	}
@@ -242,15 +242,15 @@ void Space::updateMoveDownProj(Entity* dynamicAct)
 		// El mejor "idealmente" Vec.y partimos de ese
 
 		for (auto const& staticAct : staticEntities) {
-			int topDynamic = dynamicAct->y - dynamicAct->height / 2;
-			int downDynamic = dynamicAct->y + dynamicAct->height / 2;
-			int rightDynamic = dynamicAct->x + dynamicAct->width / 2;
-			int leftDynamic = dynamicAct->x - dynamicAct->width / 2;
+			float topDynamic = dynamicAct->y - dynamicAct->height / 2;
+			float downDynamic = dynamicAct->y + dynamicAct->height / 2;
+			float rightDynamic = dynamicAct->x + dynamicAct->width / 2;
+			float leftDynamic = dynamicAct->x - dynamicAct->width / 2;
 
-			int topStatic = staticAct->y - staticAct->height / 2;
-			int downStatic = staticAct->y + staticAct->height / 2;
-			int rightStatic = staticAct->x + staticAct->width / 2;
-			int leftStatic = staticAct->x - staticAct->width / 2;
+			float topStatic = staticAct->y - staticAct->height / 2;
+			float downStatic = staticAct->y + staticAct->height / 2;
+			float rightStatic = staticAct->x + staticAct->width / 2;
+			float leftStatic = staticAct->x - staticAct->width / 2;
 
 			// Alerta!, Elemento est�tico en la trayectoria.
 			if ((downDynamic + dynamicAct->Vec.y) >= topStatic
@@ -266,7 +266,7 @@ void Space::updateMoveDownProj(Entity* dynamicAct)
 			}
 		}
 		// Ya se han comprobado todos los est�ticos
-		dynamicAct->y = dynamicAct->y + static_cast<int>(possibleMovement);
+		dynamicAct->y = dynamicAct->y + possibleMovement;
 		// Restringir la velocidad actual (opcional)
 		dynamicAct->Vec.y = possibleMovement;
 	}
@@ -280,13 +280,13 @@ void Space::updateMoveRight(Entity* dynamicAct) {
 		// El mejor "idealmente" Vec.x partimos de ese
 
 		for (auto const& staticAct : staticEntities) {
-			int rightDynamic = dynamicAct->x + dynamicAct->width / 2;
-			int topDynamic = dynamicAct->y - dynamicAct->height / 2;
-			int downDynamic = dynamicAct->y + dynamicAct->height / 2;
+			float rightDynamic = dynamicAct->x + dynamicAct->width / 2;
+			float topDynamic = dynamicAct->y - dynamicAct->height / 2;
+			float downDynamic = dynamicAct->y + dynamicAct->height / 2;
 
-			int leftStatic = staticAct->x - staticAct->width / 2;
-			int topStatic = staticAct->y - staticAct->height / 2;
-			int downStatic = staticAct->y + staticAct->height / 2;
+			float leftStatic = staticAct->x - staticAct->width / 2;
+			float topStatic = staticAct->y - staticAct->height / 2;
+			float downStatic = staticAct->y + staticAct->height / 2;
 
 			// Alerta!, Elemento est�tico en la trayectoria.
 			if ((rightDynamic + dynamicAct->Vec.x) >= leftStatic
@@ -299,12 +299,12 @@ void Space::updateMoveRight(Entity* dynamicAct) {
 				if (possibleMovement >= leftStatic - rightDynamic) {
 					// La distancia es MENOR que nuestro movimiento posible
 					// Tenemos que actualizar el movimiento posible a uno menor
-					possibleMovement = static_cast<float>(leftStatic - rightDynamic);
+					possibleMovement = leftStatic - rightDynamic;
 				}
 			}
 		}
 		// Ya se han comprobado todos los est�ticos
-		dynamicAct->x = dynamicAct->x + static_cast<int>(possibleMovement);
+		dynamicAct->x = dynamicAct->x + possibleMovement;
 		// Restringir la velocidad actual (opcional)
 		dynamicAct->Vec.x = possibleMovement;
 	}
@@ -317,12 +317,12 @@ void Space::updateMoveLeft(Entity* dynamicAct) {
 		// El mejor "idealmente" Vec.x partimos de ese
 
 		for (auto const& staticAct : staticEntities) {
-			int leftDynamic = dynamicAct->x - dynamicAct->width / 2;
-			int topDynamic = dynamicAct->y - dynamicAct->height / 2;
-			int downDynamic = dynamicAct->y + dynamicAct->height / 2;
-			int rightStatic = staticAct->x + staticAct->width / 2;
-			int topStatic = staticAct->y - staticAct->height / 2;
-			int downStatic = staticAct->y + staticAct->height / 2;
+			float leftDynamic = dynamicAct->x - dynamicAct->width / 2;
+			float topDynamic = dynamicAct->y - dynamicAct->height / 2;
+			float downDynamic = dynamicAct->y + dynamicAct->height / 2;
+			float rightStatic = staticAct->x + staticAct->width / 2;
+			float topStatic = staticAct->y - staticAct->height / 2;
+			float downStatic = staticAct->y + staticAct->height / 2;
 
 			// Alerta!, Elemento est�tico en la trayectoria.
 			if ((leftDynamic + dynamicAct->Vec.x) <= rightStatic
@@ -335,14 +335,14 @@ void Space::updateMoveLeft(Entity* dynamicAct) {
 				if (possibleMovement <= rightStatic - leftDynamic) {
 					// La distancia es MENOR que nuestro movimiento posible
 					// Tenemos que actualizar el movimiento posible a uno menor
-					possibleMovement = static_cast<float>(rightStatic - leftDynamic);
+					possibleMovement = rightStatic - leftDynamic;
 				}
 
 			}
 
 		}
 		// Ya se han comprobado todos los est�ticos
-		dynamicAct->x = dynamicAct->x + static_cast<int>(possibleMovement);
+		dynamicAct->x = dynamicAct->x + possibleMovement;
 		// Restringir la velocidad actual (opcional)
 		dynamicAct->Vec.x = possibleMovement;
 	}

@@ -175,6 +175,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Entities\Enemies\CyanVeteranEnemy.h" />
     <ClInclude Include="Entities\Enemies\CyanEnemy.h" />
     <ClInclude Include="Entities\Enemies\Enemy.h" />
     <ClInclude Include="Entities\Weapons\Bow.h" />
@@ -192,6 +193,7 @@
     <ClInclude Include="Entities\Weapons\TripleWand.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Entities\Enemies\CyanVeteranEnemy.cpp" />
     <ClCompile Include="Entities\Enemies\CyanEnemy.cpp" />
     <ClCompile Include="Entities\Enemies\Enemy.cpp" />
     <ClCompile Include="Entities\Weapons\Bow.cpp" />

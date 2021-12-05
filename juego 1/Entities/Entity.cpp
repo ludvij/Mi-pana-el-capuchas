@@ -26,8 +26,8 @@ void Entity::Draw(float scrollX)
 	source.h = m_texSize.y;
 	// tamaño de la entidad
 	SDL_Rect destination;
-	destination.x = x - width / 2;
-	destination.y = y - height / 2;
+	destination.x = std::round(x - width / 2.0f);
+	destination.y = std::round(y - height / 2.0f);
 	destination.w = width;
 	destination.h = height;
 	SDL_RenderCopyEx(Game::Get().Renderer, m_texture, &source, &destination, 0, nullptr, SDL_FLIP_NONE);
@@ -60,10 +60,10 @@ bool Entity::IsInrender(float scrollX)
 	return false;
 }
 
-bool Entity::operator==(Entity ent)
+bool Entity::operator==(Entity& ent)
 {
 	RPC_STATUS status;
-	int res = UuidCompare(&m_uuid, &(ent.m_uuid), &status);
+	bool res = UuidEqual(&m_uuid, &(ent.m_uuid), &status);
 	if (status != RPC_S_OK) LOG_ERROR("Error occured comparing uuids");
 	return res;
 }

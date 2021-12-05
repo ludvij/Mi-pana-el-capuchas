@@ -44,17 +44,21 @@ struct Vector2D {
 	float x;
 	float y;
 
-	inline Vector2D operator+ (float n) { return { x + n, y + n }; }
-	inline Vector2D operator- (float n) { return { x - n, y - n }; }
-	inline Vector2D operator* (float n) { return { x * n, y * n }; }
-	inline Vector2D operator/ (float n) { return { x / n, y / n }; }
+	inline Vector2D operator+ (float n) const { return { x + n, y + n }; } 
+	inline Vector2D operator- (float n) const { return { x - n, y - n }; }
+	inline Vector2D operator* (float n) const { return { x * n, y * n }; }
+	inline Vector2D operator/ (float n) const { return { x / n, y / n }; }
 
-	inline Vector2D operator+ (Vector2D& other) { return { x + other.x, y + other.y }; }
-	inline Vector2D operator- (Vector2D& other) { return { x - other.x, y - other.y }; }
-	inline Vector2D operator* (Vector2D& other) { return { x * other.x, y * other.y }; }
-	inline Vector2D operator/ (Vector2D& other) { return { x / other.x, y / other.y }; }
+	inline Vector2D operator+ (const Vector2D& other) const { return { x + other.x, y + other.y }; }
+	inline Vector2D operator- (const Vector2D& other) const { return { x - other.x, y - other.y }; }
+	inline Vector2D operator* (const Vector2D& other) const { return { x * other.x, y * other.y }; }
+	inline Vector2D operator/ (const Vector2D& other) const { return { x / other.x, y / other.y }; }
+
+	friend std::ostream& operator<< (std::ostream& os, const Vector2D& vector) { os << vector.x << ", " << vector.y; return os; };
 	
-	inline Vector2D operator- () { return { -x, -y }; };
+	inline Vector2D operator- () const { return { -x, -y }; };
+
+	inline float DistanceSquared() const { return x * x + y * y; }
 };
 
 enum class Input {

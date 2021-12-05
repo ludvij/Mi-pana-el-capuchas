@@ -18,8 +18,8 @@ void Projectile::Draw(float scrollX)
 	source.h = m_texSize.y;
 	// tamaño de la entidad
 	SDL_Rect destination;
-	destination.x = x - width / 2;
-	destination.y = y - height / 2;
+	destination.x = std::round(x - width / 2);
+	destination.y = std::round(y - height / 2);
 	destination.w = width;
 	destination.h = height;
 
@@ -42,21 +42,28 @@ void Projectile::Update()
 bool Projectile::IsOverlap(Entity* entity)
 {
 	if (Entity::IsOverlap(entity)) {
-		if (entity->Pierceable) {
+		if (!entity->Pierceable) {
+			Pierce = 0;
+		}
+		else {
 			for (auto itr = m_pierced.begin(); itr != m_pierced.end(); itr++) {
 				Entity* e = *itr;
+				// entity already pierced
 				if (*e == *entity) {
 					return true;
 				}
 			}
-			// make sure that this projectile can not harm player if the flag is not set
-			if (!HarmPlayer && *entity == *((Player*)Game::Get().player)) {
-				return true;
+			if (*entity == *(Player*)Game::Get().player) {
+				if (HarmPlayer) {
+					Pierce--;
+					m_pierced.push_back(entity);
+				}
+				else {
+					m_pierced.push_back(entity);
+				}
 			}
-			m_pierced.push_back(entity);
-			Pierce--;
 		}
-
+		return true;
 	}
 
 

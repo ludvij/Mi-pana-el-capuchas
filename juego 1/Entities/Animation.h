@@ -10,7 +10,7 @@ public:
 	~Animation() {};
 
 	bool Update();
-	void Draw(int x, int y);
+	void Draw(float x, float y);
 
 	int TotalFrames;
 	int CurrentFrame;

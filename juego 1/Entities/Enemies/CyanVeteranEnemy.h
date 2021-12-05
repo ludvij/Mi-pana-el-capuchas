@@ -1,11 +1,9 @@
 #pragma once
-
 #include "Enemy.h"
-
-class CyanEnemy : public Enemy
+class CyanVeteranEnemy : public Enemy
 {
 public:
-	CyanEnemy(int x, int y);
+	CyanVeteranEnemy(int x, int y);
 
 	virtual Projectile* Update() override;
 };

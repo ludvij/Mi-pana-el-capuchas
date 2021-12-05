@@ -10,7 +10,8 @@ void Enemy::Draw(float scrollX)
 	m_animation->Draw(x - scrollX, y);
 }
 
-void Enemy::Update()
+Projectile* Enemy::Update()
 {
 	bool endAnimation = m_animation->Update();
+	return nullptr;
 }

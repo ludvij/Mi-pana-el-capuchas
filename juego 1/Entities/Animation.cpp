@@ -44,7 +44,7 @@ bool Animation::Update() {
 	return false; // luego lo cambiamos
 }
 
-void Animation::Draw(int x, int y) {
+void Animation::Draw(float x, float y) {
 	SDL_Rect destination;
 	destination.x = x - m_entityWidth / 2;
 	destination.y = y - m_entityHeight / 2;

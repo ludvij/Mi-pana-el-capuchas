@@ -14,8 +14,8 @@ void Weapon::Draw(float scrollX)
 	source.h = m_texSize.y;
 	// tamaño de la entidad
 	SDL_Rect destination;
-	destination.x = x - width / 2;
-	destination.y = y - height / 2;
+	destination.x = std::round(x - width / 2);
+	destination.y = std::round(y - height / 2);
 	destination.w = width;
 	destination.h = height;
 

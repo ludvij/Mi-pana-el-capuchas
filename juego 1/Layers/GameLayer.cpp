@@ -1,5 +1,6 @@
 ﻿#include "Layers/GameLayer.h"
 #include "Entities/Enemies/CyanEnemy.h"
+#include "Entities/Enemies/CyanVeteranEnemy.h"
 
 #include <algorithm>
 #include <fstream>
@@ -25,7 +26,7 @@ void GameLayer::keysToControls(SDL_Event event)
 		case SDLK_ESCAPE:
 			Game::Get().Stop();
 			break;
-#endif // DEBUG
+#endif // _DEBUG
 		case SDLK_d: // derecha
 			m_controlMoveX = MAX_MAP_POS;
 			break;
@@ -132,16 +133,16 @@ void GameLayer::deleteAll()
 int GameLayer::mapRangeControls(int stick)
 {
 	// clamp stick range to make it consistant
-	int clamppedStick = std::clamp(stick, -MAX_POS, MAX_POS);
+	int clampedStick = std::clamp(stick, -MAX_POS, MAX_POS);
 	// inverse lerp funcion since c++ doesn't provide one that I know of
 	auto iLerp = [](int x, int a, int b) { return static_cast<float>(x - a) / static_cast<float>(b - a); };
 
 	if (stick > 0) {
-		float t = iLerp(stick, MIN_POS, MAX_POS);
+		float t = iLerp(clampedStick, MIN_POS, MAX_POS);
 		return std::lerp(MIN_MAP_POS, MAX_MAP_POS , t);
 	}
 	else if (stick < 0) {
-		float t = iLerp(stick, -MIN_POS, -MAX_POS);
+		float t = iLerp(clampedStick, -MIN_POS, -MAX_POS);
 		return std::lerp(-MIN_MAP_POS, -MAX_MAP_POS, t);
 	}
 	return 0;
@@ -149,11 +150,15 @@ int GameLayer::mapRangeControls(int stick)
 
 void GameLayer::updateCollisions()
 {
-
 	for (const auto& p : projectiles) {
 		if (!p->IsInrender()) {
 			p->Deleted = true;
 			space.RemoveProjectile(p);
+		}
+		if (p->HarmPlayer) {
+			if (p->IsOverlap(player)) {
+				//TODO: Damage player
+			}
 		}
 	}
 	deleteActors(projectiles);
@@ -166,7 +171,11 @@ void GameLayer::Init() {
 	space = Space();
 	loadMap("rcs/maps/map2");
 	auto c = new CyanEnemy(10 * Game::Get().CellSizeX + Game::Get().CellSizeX/2, 10 * Game::Get().CellSizeY + Game::Get().CellSizeY/2);
+	auto vc = new CyanVeteranEnemy(5 * Game::Get().CellSizeX + Game::Get().CellSizeX / 2, 10 * Game::Get().CellSizeY + Game::Get().CellSizeY / 2);
 	enemies.push_back(c);
+	enemies.push_back(vc);
+	space.AddDynamicEntity(c);
+	space.AddDynamicEntity(vc);
 }
 
 void GameLayer::Draw()
@@ -188,7 +197,13 @@ void GameLayer::Update()
 
 	space.Update();
 	for (const auto& p : projectiles) p->Update();
-	for (const auto& e : enemies) e->Update();
+	for (const auto& e : enemies) {
+		auto p = e->Update();
+		if (p != nullptr) {
+			space.AddProjectile(p);
+			projectiles.push_back(p);
+		}
+	}
 	player->Update();
 
 	updateCollisions();
@@ -228,6 +243,7 @@ void GameLayer::ProcessControls(SDL_Event event)
 
 	float speedMultX = static_cast<float>(m_controlMoveX) / static_cast<float>(MAX_MAP_POS);
 	float speedMultY = static_cast<float>(m_controlMoveY) / static_cast<float>(MAX_MAP_POS);
+
 	player->MoveX(speedMultX);
 	player->MoveY(speedMultY);
 
@@ -322,12 +338,5 @@ void GameLayer::loadMapObj(char character, int x, int y)
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
 	}
-	/*case 'E': {
-		auto enemy = new Enemy(x, y, game);
-		enemy->y = enemy->y - enemy->height / 2;
-		enemies.emplace_back(enemy);
-		space->addDynamicActor(enemy);
-		break;
-	}*/
 	}
 }
