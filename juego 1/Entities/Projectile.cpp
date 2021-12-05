@@ -2,10 +2,11 @@
 #include "Player.h"
 #include "Layers/GameLayer.h"
 
-Projectile::Projectile(std::string_view filename, int x, int y, int width, int height, float angle, int pierce, Vector2D velocity)
+Projectile::Projectile(std::string_view filename, int x, int y, int width, int height, float angle, int pierce, Vector2D velocity, int dmg)
 	: Entity(filename, x, y, width, height),
-	  Pierce(pierce),
-	  Angle(angle)
+	Pierce(pierce),
+	Angle(angle),
+	Dmg(dmg)
 {
 	Vec = velocity;
 }

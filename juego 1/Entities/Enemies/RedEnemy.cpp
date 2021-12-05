@@ -10,6 +10,7 @@ RedEnemy::RedEnemy(int x, int y)
 	m_animation = m_aIdle;
 	collisionDMG = 3;
 	Health = 1;
+	type = "red";
 }
 
 
@@ -20,7 +21,7 @@ Projectile* RedEnemy::Update()
 		Vec = { 0 };
 		return nullptr;
 	}
-	Player* p = ((GameLayer*)Game::Get().layer)->player;
+	Player* p = ((GameLayer*)Game::Get().gameLayer)->player;
 	// MOVEMENT
 	Vector2D dst = { x - p->x, y - p->y };
 

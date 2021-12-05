@@ -37,30 +37,14 @@ void HUD::UpdateHearts(Player* player)
 	int idx = player->Health / 2;
 	if (idx <= 0) idx = 0;
 	for (int i = 0; i < 5; i++) {
-		delete hearts[i];
 		if (i < idx) {
-			hearts[i] = new Entity("rcs/heart.png",
-				Game::Get().Width * 0.02f + i * Game::Get().CellSizeX / 2,
-				Game::Get().Height * 0.02f,
-				Game::Get().CellSizeX,
-				Game::Get().CellSizeY
-			);
+			hearts[i]->m_texture = Game::Get().GetTexture("rcs/heart.png");
 		}
 		if (i == idx && player->Health % 2 == 1) {
-			hearts[i] = new Entity("rcs/half_heart.png",
-				Game::Get().Width * 0.02f + i * Game::Get().CellSizeX / 2,
-				Game::Get().Height * 0.02f,
-				Game::Get().CellSizeX,
-				Game::Get().CellSizeY
-			);
+			hearts[i]->m_texture = Game::Get().GetTexture("rcs/half_heart.png");
 		}
 		else if (i >= idx) {
-			hearts[i] = new Entity("rcs/empty_heart.png",
-				Game::Get().Width * 0.02f + i * Game::Get().CellSizeX / 2,
-				Game::Get().Height * 0.02f,
-				Game::Get().CellSizeX,
-				Game::Get().CellSizeY
-			);
+			hearts[i]->m_texture = Game::Get().GetTexture("rcs/empty_heart.png");
 		}
 		
 	}

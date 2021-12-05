@@ -6,7 +6,7 @@ class Projectile : public Entity
 {
 
 public:
-	Projectile(std::string_view filename, int x, int y, int width, int height, float angle, int pierce, Vector2D velocity);
+	Projectile(std::string_view filename, int x, int y, int width, int height, float angle, int pierce, Vector2D velocity, int dmg);
 
 	virtual void Draw(float scrollX =0) override;
 	void Update();
@@ -15,6 +15,7 @@ public:
 
 	int Pierce;
 	float Angle;
+	int Dmg;
 	bool HarmPlayer = false;
 
 

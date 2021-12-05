@@ -2,6 +2,7 @@
 
 #include "Layers/GameLayer.h"
 #include "Layers/EndLayer.h"
+#include "Layers/PowerUpLayer.h"
 
 Game Game::s_Instance;
 
@@ -64,6 +65,7 @@ Game::Game()
 
 	gameLayer = new GameLayer();
 	endLayer = new EndLayer();
+	intersectionLayer = new PowerUpLayer();
 
 	layer = gameLayer;
 }

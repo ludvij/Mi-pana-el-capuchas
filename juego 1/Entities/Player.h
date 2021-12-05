@@ -22,6 +22,8 @@ public:
 	Weapon* Weapon;
 
 	int Health = 10;
+	int dmg = 1;
+	int cadence = 30;
 
 private:
 	float m_maxSpeed = 4;

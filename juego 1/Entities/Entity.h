@@ -39,12 +39,11 @@ public:
 
 	bool Deleted = false;
 
-protected:
-
 	//texture size
 	SDL_Point m_texSize = { 0,0 };
 
 	SDL_Texture* m_texture = nullptr;
+
 private:
 	UUID m_uuid;
 

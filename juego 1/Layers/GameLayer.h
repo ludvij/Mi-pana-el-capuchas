@@ -33,6 +33,8 @@ public: // maybe change it to private
 	SDL_GameController* controller;
 	Space space;
 	std::list<Tile*> tiles;
+	std::list<Tile*> tilesBG;
+
 	std::list<Projectile*> projectiles;
 	std::list<Enemy*> enemies;
 	std::list<Weapon*> droppedWeapons;
@@ -46,6 +48,8 @@ private:
 
 	void keysToControls(SDL_Event event);
 	void gamepadToControls(SDL_Event event);
+
+	void createEnemies();
 
 	// frees all resources
 	void deleteAll();

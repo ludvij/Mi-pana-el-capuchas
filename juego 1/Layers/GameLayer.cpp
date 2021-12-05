@@ -130,11 +130,61 @@ void GameLayer::gamepadToControls(SDL_Event event)
 
 }
 
+void GameLayer::createEnemies()
+{
+	// every 45 seconds we add another enemy
+	// game runs 60 fps so 60 * 45
+	int enemyN = 5 + time / 2700 + level / 3;
+	//enemies can't appear in an area that is 3 cells close to the player
+	Vector2D Mindst = { Game::Get().CellSizeX * 5, Game::Get().CellSizeY * 5};
+
+	while (enemyN != 0) {
+		int x = Game::Get().randomInt(Game::Get().CellSizeX + 50, Game::Get().CellSizeX * 17 - 50);
+		int y = Game::Get().randomInt(Game::Get().CellSizeY + 50, Game::Get().CellSizeY * 17 - 50);
+		bool placeable = true;
+		for (const auto& t : tiles) {
+			// can be placed
+			if (t->isPointInBounds(x, y)) {
+				placeable = false;
+			}
+		}
+		if (!placeable) {
+			continue;
+		}
+		else {
+			Vector2D dst = { player->x - x, player->y - y };
+			if (dst.DistanceSquared() > Mindst.DistanceSquared()) {
+				int rnd = Game::Get().randomInt(1, 100);
+				if (rnd <= 50) {
+					auto e = new CyanEnemy(x, y);
+					e->Health += level / 3;
+					enemies.push_back(e);
+					space.AddDynamicEntity(e);
+				}
+				else if (rnd <= 80) {
+					auto e = new CyanVeteranEnemy(x, y);
+					e->Health += level / 3;
+					enemies.push_back(e);
+					space.AddDynamicEntity(e);
+				}
+				else {
+					auto e = new RedEnemy(x, y);
+					e->Health += level / 3;
+					enemies.push_back(e);
+					space.AddDynamicEntity(e);
+				}
+				enemyN--;
+			}
+		}
+	}
+}
+
 // use to delete all resources in the class
 void GameLayer::deleteAll()
 {
 	space.Clear();				    
 	while (!tiles.empty())          delete tiles.back(),          tiles.pop_back();
+	while (!tilesBG.empty())        delete tilesBG.back(),        tilesBG.pop_back();
 	while (!enemies.empty())        delete enemies.back(),        enemies.pop_back();
 	while (!projectiles.empty())    delete projectiles.back(),    projectiles.pop_back();
 	while (!droppedWeapons.empty()) delete droppedWeapons.back(), droppedWeapons.pop_back();
@@ -179,12 +229,14 @@ void GameLayer::updateCollisions()
 		else {
 			for (const auto& e : enemies) {
 				if (e->state == State::MOVING && p->IsOverlap(e)) {
-					e->Health--;
+					e->Health -= p->Dmg;
 				}
 			}
 		}
 	}
 	for (const auto& e : enemies) {
+		if (!e->IsInrender())
+			e->Deleted = true;
 		if (e->state == State::DEAD) {
 			e->Deleted = true;
 			auto drop = e->Drop();
@@ -202,6 +254,8 @@ void GameLayer::updateCollisions()
 
 	for (const auto& d : droppedWeapons) {
 		if (d->IsOverlap(player)) {
+			d->cadence = player->cadence;
+			d->damage = player->dmg;
 			player->Weapon = d;
 
 		}
@@ -229,15 +283,17 @@ void GameLayer::Init() {
 	space = Space();
 	loadMap("rcs/maps/map" + std::to_string(level % 3 + 1));
 	hud.UpdateHearts(player);
-	auto r = new RedEnemy(5 * Game::Get().CellSizeX + Game::Get().CellSizeX / 2, 10 * Game::Get().CellSizeY + Game::Get().CellSizeY / 2);
-	enemies.push_back(r);
-	space.AddDynamicEntity(r);
-
+	
+	createEnemies();
+	
 }
 
 void GameLayer::Draw()
 {
 
+	for (const auto& tile : tilesBG) {
+		tile->Draw();
+	}
 	for (const auto& tile : tiles) {
 		tile->Draw();
 	}
@@ -254,12 +310,26 @@ void GameLayer::Draw()
 	Game::Get().Present();
 }
 
+
+std::ostream& operator<< (std::ostream& os, const std::list<Enemy*>& vector) {
+	os << "\n";
+	for (const auto& e : vector) {
+		os << e->type << " [" << e->x << ", " << e->y << "]\n";
+	}
+	return os;
+}
+
 void GameLayer::Update()
 {
 	// level cleared
 	if (enemies.size() == 0) {
 		level++;
 		Init();
+		if ((level) % 3 == 0 && level != 0) {
+			Game::Get().layer = Game::Get().intersectionLayer;
+		}
+
+
 	}
 	space.Update();
 	for (const auto& p : projectiles) p->Update();
@@ -276,6 +346,7 @@ void GameLayer::Update()
 	updateCollisions();
 	if (player->Health <= 0) {
 		Game::Get().layer = Game::Get().endLayer;
+
 		Init();
 	}
 	time++;
@@ -422,7 +493,7 @@ void GameLayer::loadMapObj(char character, int x, int y)
 		std::string grass = "rcs/tiles/tile_grass" + std::to_string(tex) + ".png";
 		auto tile = new Tile(grass, x, y);
 		tile->y = tile->y - tile->height / 2;
-		tiles.push_back(tile);
+		tilesBG.push_back(tile);
 	}
 	}
 }

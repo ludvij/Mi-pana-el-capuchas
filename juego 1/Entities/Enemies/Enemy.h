@@ -20,6 +20,7 @@ public:
 	int ShotTime = -1;
 	int collisionDMG = 1;
 	State state = State::MOVING;
+	std::string type = "null";
 
 protected:
 	Animation* m_animation = nullptr;

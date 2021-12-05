@@ -17,7 +17,7 @@ public:
 
 	virtual std::list<Projectile*> Use() = 0;
 
-	virtual void Update() = 0;
+	virtual void Update();
 
 	virtual void Draw(float scrollX = 0) override;
 	virtual void Draw(float x, float y);
@@ -31,6 +31,8 @@ public:
 	int Uses = -1;
 
 	int damage = 1;
+
+	int cadence = 30;
 
 
 protected:

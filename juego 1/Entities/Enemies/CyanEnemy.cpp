@@ -10,6 +10,7 @@ CyanEnemy::CyanEnemy(int x, int y)
 	m_animation = m_aIdle;
 	Health = 3;
 	ShotTime = 90;
+	type = "cyan";
 }
 
 Projectile* CyanEnemy::Update()
@@ -19,7 +20,7 @@ Projectile* CyanEnemy::Update()
 		Vec = { 0 };
 		return nullptr;
 	}
-	Player* p = ((GameLayer*)Game::Get().layer)->player;
+	Player* p = ((GameLayer*)Game::Get().gameLayer)->player;
 	// MOVEMENT
 	Vector2D dst = {x - p->x, y - p->y};
 
@@ -43,7 +44,7 @@ Projectile* CyanEnemy::Update()
 	if (ShotTime <= 0) {
 		ShotTime = 90;
 		auto p =  new Projectile("rcs/player/weapons/projectile_wand.png",
-			x, y, Game::Get().CellSizeX / 2, Game::Get().CellSizeY / 2, 0, 1, -dst / std::sqrtf(dst.DistanceSquared()) * 5);
+			x, y, Game::Get().CellSizeX / 2, Game::Get().CellSizeY / 2, 0, 1, -dst / std::sqrtf(dst.DistanceSquared()) * 5, 1);
 		p->HarmPlayer = true;
 		return p;
 	}

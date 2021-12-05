@@ -194,6 +194,7 @@
     <ClInclude Include="Entities\Weapons\Wand.h" />
     <ClInclude Include="Entities\Weapons\TripleWand.h" />
     <ClInclude Include="Entities\Enemies\RedEnemy.h" />
+    <ClInclude Include="Layers\PowerUpLayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Layers\EndLayer.cpp" />
@@ -216,6 +217,7 @@
     <ClCompile Include="Entities\Weapons\Wand.cpp" />
     <ClCompile Include="Entities\Weapons\TripleWand.cpp" />
     <ClCompile Include="Entities\Enemies\RedEnemy.cpp" />
+    <ClCompile Include="Layers\PowerUpLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="rcs\player.png" />

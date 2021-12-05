@@ -10,6 +10,7 @@ CyanVeteranEnemy::CyanVeteranEnemy(int x, int y)
 	m_animation = m_aIdle;
 	Health = 3;
 	ShotTime = 90;
+	type = "cyan veteran";
 }
 
 Projectile* CyanVeteranEnemy::Update()
@@ -19,7 +20,7 @@ Projectile* CyanVeteranEnemy::Update()
 		Vec = { 0 };
 		return nullptr;
 	}
-	Player* p = ((GameLayer*)Game::Get().layer)->player;
+	Player* p = ((GameLayer*)Game::Get().gameLayer)->player;
 	// MOVEMENT
 	Vector2D dst = { x - p->x, y - p->y };
 
@@ -48,7 +49,7 @@ Projectile* CyanVeteranEnemy::Update()
 
 		velocity = velocity / std::sqrtf(velocity.DistanceSquared()) * 7;
 		auto p = new Projectile("rcs/player/weapons/projectile_triple_wand.png",
-			x, y, Game::Get().CellSizeX / 2, Game::Get().CellSizeY / 2, 0, 1, velocity);
+			x, y, Game::Get().CellSizeX / 2, Game::Get().CellSizeY / 2, 0, 1, velocity, 1);
 		p->HarmPlayer = true;
 		return p;
 	}

@@ -1,7 +1,5 @@
 #include "Player.h"
 #include "Weapons/Wand.h"
-#include "Weapons/TripleWand.h"
-#include "Weapons/Bow.h"
 
 Player::Player(int x, int y)
 	: Entity("rcs/player/player.png", x, y, Game::Get().CellSizeX, Game::Get().CellSizeY),
@@ -19,8 +17,7 @@ Player::Player(int x, int y)
 	m_aMoveRight = new Animation("rcs/player/player_move_right.png", width, height, 18, 4, true);
 
 	m_animation = m_aIdleFront;
-
-	Weapon = new Bow(x, y);
+	Weapon = new Wand(x, y);
 }
 
 Player::~Player()
@@ -42,6 +39,7 @@ void Player::MoveX(float multiplier) {
 void Player::MoveY(float multiplier) {
 	Vec.y = multiplier * m_maxSpeed;
 }
+
 
 void Player::Update() {
 	bool endAnimation = m_animation->Update();
@@ -106,6 +104,7 @@ void Player::Update() {
 	if (Weapon->Uses == 0) {
 		delete Weapon;
 		Weapon = new Wand(x, y);
+		Weapon->cadence = cadence;
 	}
 	else {
 		Weapon->x = x;

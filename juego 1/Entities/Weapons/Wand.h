@@ -7,7 +7,6 @@ public:
 
 	virtual std::list<Projectile*> Use() override;
 
-	virtual void Update() override;
 
 	WeaponType Type = WeaponType::WAND;
 };

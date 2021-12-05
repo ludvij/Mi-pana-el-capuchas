@@ -5,6 +5,15 @@ Weapon::Weapon(std::string_view filename, int x, int y, int width, int height)
 {
 }
 
+void Weapon::Update()
+{
+	if (!Ready) shotTime--;
+	if (shotTime <= 0) {
+		Ready = true;
+		shotTime = cadence;
+	}
+}
+
 void Weapon::Draw(float scrollX)
 {
 	SDL_Rect source;
