@@ -111,8 +111,7 @@ public:
 
 	int CellSizeX = Width / 18;
 	int CellSizeY = Height / 18;
-	
-	void* player;
+
 	Layer* layer = nullptr;
 
 private:

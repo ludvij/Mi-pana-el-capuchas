@@ -26,3 +26,20 @@ void Weapon::Draw(float scrollX)
 	SDL_SetRenderDrawColor(Game::Get().Renderer, HEX_COLOR(0));
 #endif
 }
+
+void Weapon::Draw(float x, float y)
+{
+	SDL_Rect source;
+	source.x = 0;
+	source.y = 0;
+	source.w = m_texSize.x;
+	source.h = m_texSize.y;
+	// tamaño de la entidad
+	SDL_Rect destination;
+	destination.x = std::round(x - width / 2);
+	destination.y = std::round(y - height / 2);
+	destination.w = width;
+	destination.h = height;
+
+	SDL_RenderCopyEx(Game::Get().Renderer, m_texture, &source, &destination, 0, nullptr, SDL_FLIP_NONE);
+}

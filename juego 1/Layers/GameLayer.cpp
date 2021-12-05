@@ -158,15 +158,45 @@ void GameLayer::updateCollisions()
 		}
 		if (p->HarmPlayer) {
 			if (p->IsOverlap(player)) {
-				
+				player->Health--;
+				hud.UpdateHearts(player);
 			}
 		}
 		else {
 			for (const auto& e : enemies) {
-				if (p->IsOverlap(e)) {
+				if (e->state == State::MOVING && p->IsOverlap(e)) {
 					e->Health--;
 				}
 			}
+		}
+	}
+	for (const auto& e : enemies) {
+		if (e->state == State::DEAD) {
+			e->Deleted = true;
+			auto drop = e->Drop();
+			if (drop != nullptr) {
+				droppedWeapons.push_back(drop);
+			}
+		}
+	}
+
+	for (const auto& d : droppedWeapons) {
+		if (d->IsOverlap(player)) {
+			player->Weapon = d;
+
+		}
+	}
+	auto itr = droppedWeapons.begin();
+	while (itr != droppedWeapons.end())
+	{
+		Weapon* ent = *itr;
+		if (player->IsOverlap(ent))
+		{
+			player->Weapon = ent;
+			droppedWeapons.erase(itr++);	
+		}
+		else {
+			itr++;
 		}
 	}
 	deleteActors(projectiles);
@@ -178,6 +208,7 @@ void GameLayer::Init() {
 	deleteAll();
 	space = Space();
 	loadMap("rcs/maps/map2");
+	hud.UpdateHearts(player);
 	auto c = new CyanEnemy(10 * Game::Get().CellSizeX + Game::Get().CellSizeX/2, 10 * Game::Get().CellSizeY + Game::Get().CellSizeY/2);
 	//auto r = new RedEnemy(5 * Game::Get().CellSizeX + Game::Get().CellSizeX / 2, 10 * Game::Get().CellSizeY + Game::Get().CellSizeY / 2);
 	auto vc = new CyanVeteranEnemy(10 * Game::Get().CellSizeX + Game::Get().CellSizeX / 2, 7 * Game::Get().CellSizeY + Game::Get().CellSizeY / 2);
@@ -195,11 +226,16 @@ void GameLayer::Draw()
 	for (const auto& tile : tiles) {
 		tile->Draw();
 	}
+	for (const auto& d : droppedWeapons) {
+		d->Draw();
+	}
+
 	for (const auto& enemy : enemies) {
 		enemy->Draw();
 	}
 	player->Draw();
 	for (const auto& p : projectiles) p->Draw();
+	hud.Draw();
 	Game::Get().Present();
 }
 
@@ -216,8 +252,11 @@ void GameLayer::Update()
 		}
 	}
 	player->Update();
+	hud.UpdateFrame(player);
 
 	updateCollisions();
+	if (player->Health <= 0)
+		Init();
 }
 
 void GameLayer::ProcessControls(SDL_Event event)
@@ -338,8 +377,6 @@ void GameLayer::loadMapObj(char character, int x, int y)
 		// modificaci�n para empezar a contar desde el suelo.
 		player->y = player->y - player->height / 2;
 		space.AddDynamicEntity(player);
-		// keep reference that all classes can access;
-		Game::Get().player = player;
 		[[fallthrough]];
 	}
 	case '.': {

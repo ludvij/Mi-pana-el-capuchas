@@ -20,6 +20,7 @@ public:
 	virtual void Update() = 0;
 
 	virtual void Draw(float scrollX = 0) override;
+	virtual void Draw(float x, float y);
 
 	WeaponType Type = WeaponType::NONE;
 
@@ -34,6 +35,6 @@ public:
 
 protected:
 	int shotTime = -1;
-	float projectileSpeed;
+	float projectileSpeed = 10;
 };
 

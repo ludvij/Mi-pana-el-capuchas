@@ -113,6 +113,7 @@ void Player::Update() {
 		Weapon->Update();
 
 	}
+
 }
 
 void Player::Draw(float scrollX)

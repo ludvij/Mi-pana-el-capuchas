@@ -21,6 +21,8 @@ public:
 	State state;
 	Weapon* Weapon;
 
+	int Health = 10;
+
 private:
 	float m_maxSpeed = 4;
 

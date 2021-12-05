@@ -1,10 +1,13 @@
 #include "CyanVeteranEnemy.h"
 #include "Entities/Player.h"
+#include "Layers/GameLayer.h"
 
 CyanVeteranEnemy::CyanVeteranEnemy(int x, int y)
 	: Enemy("rcs/enemies/enemy_cyan_veteran.png", x, y, Game::Get().CellSizeX, Game::Get().CellSizeY)
 {
-	m_animation = new Animation("rcs/enemies/enemy_cyan_veteran_idle.png", width, height, 18, 3, true);
+	m_aIdle = new Animation("rcs/enemies/enemy_cyan_veteran_idle.png", width, height, 18, 3, true);
+	m_aDying = new Animation("rcs/enemies/enemy_cyan_veteran_dying.png", width, height, 18, 3, false);
+	m_animation = m_aIdle;
 	Health = 3;
 	ShotTime = 90;
 }
@@ -12,7 +15,11 @@ CyanVeteranEnemy::CyanVeteranEnemy(int x, int y)
 Projectile* CyanVeteranEnemy::Update()
 {
 	Enemy::Update();
-	Player* p = (Player*)Game::Get().player;
+	if (state != State::MOVING) {
+		Vec = { 0 };
+		return nullptr;
+	}
+	Player* p = ((GameLayer*)Game::Get().layer)->player;
 	// MOVEMENT
 	Vector2D dst = { x - p->x, y - p->y };
 

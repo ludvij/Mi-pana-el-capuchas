@@ -6,6 +6,7 @@
 #include "Entities/Tile.h"
 #include "Entities/Projectile.h"
 #include "Entities/Enemies/Enemy.h"
+#include "Entities/HUD.h"
 
 #include <list>
 
@@ -34,6 +35,8 @@ public: // maybe change it to private
 	std::list<Tile*> tiles;
 	std::list<Projectile*> projectiles;
 	std::list<Enemy*> enemies;
+	std::list<Weapon*> droppedWeapons;
+	HUD hud;
 
 
 private:

@@ -90,6 +90,9 @@
     <ClInclude Include="Entities\Enemies\RedEnemy.h">
       <Filter>Header Files\Entities\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="Entities\HUD.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -145,6 +148,9 @@
     </ClCompile>
     <ClCompile Include="Entities\Enemies\RedEnemy.cpp">
       <Filter>Source Files\Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\HUD.cpp">
+      <Filter>Source Files\Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -182,6 +182,7 @@
     <ClInclude Include="Entities\Animation.h" />
     <ClInclude Include="Entities\Entity.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Entities\HUD.h" />
     <ClInclude Include="Layers\GameLayer.h" />
     <ClInclude Include="Layers\Layer.h" />
     <ClInclude Include="Entities\Tile.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="Entities\Animation.cpp" />
     <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Entities\HUD.cpp" />
     <ClCompile Include="Layers\GameLayer.cpp" />
     <ClCompile Include="Layers\Layer.cpp" />
     <ClCompile Include="main.cpp" />
