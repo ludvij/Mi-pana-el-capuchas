@@ -105,6 +105,7 @@ void Player::Update() {
 		delete Weapon;
 		Weapon = new Wand(x, y);
 		Weapon->cadence = cadence;
+		Weapon->damage = dmg;
 	}
 	else {
 		Weapon->x = x;

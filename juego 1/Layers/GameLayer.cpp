@@ -283,7 +283,8 @@ void GameLayer::Init() {
 	space = Space();
 	loadMap("rcs/maps/map" + std::to_string(level % 3 + 1));
 	hud.UpdateHearts(player);
-	
+	player->Weapon->cadence = player->cadence;
+	player->Weapon->damage = player->dmg;
 	createEnemies();
 	
 }
