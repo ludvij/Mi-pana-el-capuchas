@@ -237,8 +237,9 @@ void GameLayer::updateCollisions()
 		}
 	}
 	for (const auto& e : enemies) {
-		if (!e->IsInrender())
+		if (!e->IsInrender()) {
 			e->Deleted = true;
+		}
 		if (e->state == State::DEAD) {
 			e->Deleted = true;
 			auto drop = e->Drop();

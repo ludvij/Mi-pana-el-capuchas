@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{321b762d-e0a2-4b62-ba89-c1b0944f9524}</ProjectGuid>
-    <RootNamespace>juego1</RootNamespace>
+    <ProjectGuid>{d567f223-441e-4aba-b0b8-c3c1b601bea8}</ProjectGuid>
+    <RootNamespace>mipanaelcapuchas</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -72,35 +72,21 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)librareis\include;$(IncludePath);$(ProjectDir)</IncludePath>
-    <LibraryPath>$(SolutionDir)include\lib;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)bin\$(Platform)-$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)bin-obj\$(Platform)-$(Configuration)\</IntDir>
-    <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)librareis\include;$(IncludePath);$(ProjectDir)</IncludePath>
-    <LibraryPath>$(SolutionDir)include\lib;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)bin\$(Platform)-$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)bin-obj\$(Platform)-$(Configuration)\</IntDir>
-    <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)librareis\include;$(IncludePath);$(ProjectDir)</IncludePath>
-    <LibraryPath>$(SolutionDir)include\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Platform)-$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin-obj\$(Platform)-$(Configuration)\</IntDir>
-    <SourcePath>$(SourcePath)</SourcePath>
+    <IncludePath>$(ProjectDir);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)librareis\include;$(IncludePath);$(ProjectDir)</IncludePath>
-    <LibraryPath>$(SolutionDir)include\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Platform)-$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin-obj\$(Platform)-$(Configuration)\</IntDir>
-    <SourcePath>$(SourcePath)</SourcePath>
+    <IncludePath>$(ProjectDir);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -108,14 +94,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)libraries\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)libraries\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -126,16 +108,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)libraries\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)libraries\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -144,13 +122,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)libraries\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)libraries\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -162,66 +140,69 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)libraries\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)libraries\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Layers\EndLayer.h" />
-    <ClInclude Include="Entities\Enemies\CyanVeteranEnemy.h" />
-    <ClInclude Include="Entities\Enemies\CyanEnemy.h" />
-    <ClInclude Include="Entities\Enemies\Enemy.h" />
-    <ClInclude Include="Entities\Weapons\Bow.h" />
-    <ClInclude Include="Entities\Animation.h" />
-    <ClInclude Include="Entities\Entity.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="Entities\HUD.h" />
-    <ClInclude Include="Layers\GameLayer.h" />
-    <ClInclude Include="Layers\Layer.h" />
-    <ClInclude Include="Entities\Tile.h" />
-    <ClInclude Include="Entities\Player.h" />
-    <ClInclude Include="Physics\Space.h" />
-    <ClInclude Include="Entities\Weapons\Weapon.h" />
-    <ClInclude Include="Entities\Projectile.h" />
-    <ClInclude Include="Entities\Weapons\Wand.h" />
-    <ClInclude Include="Entities\Weapons\TripleWand.h" />
-    <ClInclude Include="Entities\Enemies\RedEnemy.h" />
-    <ClInclude Include="Layers\PowerUpLayer.h" />
-    <ClInclude Include="Entities\SpriteSheet.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Layers\EndLayer.cpp" />
-    <ClCompile Include="Entities\Enemies\CyanVeteranEnemy.cpp" />
-    <ClCompile Include="Entities\Enemies\CyanEnemy.cpp" />
-    <ClCompile Include="Entities\Enemies\Enemy.cpp" />
-    <ClCompile Include="Entities\Weapons\Bow.cpp" />
     <ClCompile Include="Entities\Animation.cpp" />
+    <ClCompile Include="Entities\Enemies\CyanEnemy.cpp" />
+    <ClCompile Include="Entities\Enemies\CyanVeteranEnemy.cpp" />
+    <ClCompile Include="Entities\Enemies\Enemy.cpp" />
+    <ClCompile Include="Entities\Enemies\RedEnemy.cpp" />
     <ClCompile Include="Entities\Entity.cpp" />
-    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Entities\HUD.cpp" />
+    <ClCompile Include="Entities\Player.cpp" />
+    <ClCompile Include="Entities\Projectile.cpp" />
+    <ClCompile Include="Entities\Tile.cpp" />
+    <ClCompile Include="Entities\Weapons\Bow.cpp" />
+    <ClCompile Include="Entities\Weapons\TripleWand.cpp" />
+    <ClCompile Include="Entities\Weapons\Wand.cpp" />
+    <ClCompile Include="Entities\Weapons\Weapon.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Layers\EndLayer.cpp" />
     <ClCompile Include="Layers\GameLayer.cpp" />
     <ClCompile Include="Layers\Layer.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Entities\Tile.cpp" />
-    <ClCompile Include="Entities\Player.cpp" />
-    <ClCompile Include="Physics\Space.cpp" />
-    <ClCompile Include="Entities\Weapons\Weapon.cpp" />
-    <ClCompile Include="Entities\Projectile.cpp" />
-    <ClCompile Include="Entities\Weapons\Wand.cpp" />
-    <ClCompile Include="Entities\Weapons\TripleWand.cpp" />
-    <ClCompile Include="Entities\Enemies\RedEnemy.cpp" />
     <ClCompile Include="Layers\PowerUpLayer.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Physics\Space.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="rcs\player.png" />
+    <ClInclude Include="Entities\Animation.h" />
+    <ClInclude Include="Entities\Enemies\CyanEnemy.h" />
+    <ClInclude Include="Entities\Enemies\CyanVeteranEnemy.h" />
+    <ClInclude Include="Entities\Enemies\Enemy.h" />
+    <ClInclude Include="Entities\Enemies\RedEnemy.h" />
+    <ClInclude Include="Entities\Entity.h" />
+    <ClInclude Include="Entities\HUD.h" />
+    <ClInclude Include="Entities\Player.h" />
+    <ClInclude Include="Entities\Projectile.h" />
+    <ClInclude Include="Entities\SpriteSheet.h" />
+    <ClInclude Include="Entities\Tile.h" />
+    <ClInclude Include="Entities\Weapons\Bow.h" />
+    <ClInclude Include="Entities\Weapons\TripleWand.h" />
+    <ClInclude Include="Entities\Weapons\Wand.h" />
+    <ClInclude Include="Entities\Weapons\Weapon.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Layers\EndLayer.h" />
+    <ClInclude Include="Layers\GameLayer.h" />
+    <ClInclude Include="Layers\Layer.h" />
+    <ClInclude Include="Layers\PowerUpLayer.h" />
+    <ClInclude Include="Physics\Space.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="libpng16-16.dll" />
+    <None Include="SDL2.dll" />
+    <None Include="SDL2_image.dll" />
+    <None Include="zlib1.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
