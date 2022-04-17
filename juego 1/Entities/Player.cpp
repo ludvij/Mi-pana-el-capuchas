@@ -6,15 +6,15 @@ Player::Player(int x, int y)
 	orientation(Orientation::NONE),
 	state(State::IDLE)
 {
-	m_aIdleBack  = new Animation("rcs/player/player_idle_back.png",  width, height, 18, 3, true);
-	m_aIdleFront = new Animation("rcs/player/player_idle_front.png", width, height, 18, 3, true);
-	m_aIdleLeft  = new Animation("rcs/player/player_idle_left.png",  width, height, 18, 3, true);
-	m_aIdleRight = new Animation("rcs/player/player_idle_right.png", width, height, 18, 3, true);
+	m_aIdleBack  = new Animation(PLAYER_IDLE_BACK_POS,  width, height, 18, 3, true);
+	m_aIdleFront = new Animation(PLAYER_IDLE_FRONT_POS, width, height, 18, 3, true);
+	m_aIdleLeft  = new Animation(PLAYER_IDLE_LEFT_POS,  width, height, 18, 3, true);
+	m_aIdleRight = new Animation(PLAYER_IDLE_RIGHT_POS, width, height, 18, 3, true);
 
-	m_aMoveBack  = new Animation("rcs/player/player_move_back.png",  width, height, 18, 4, true);
-	m_aMoveFront = new Animation("rcs/player/player_move_front.png", width, height, 18, 4, true);
-	m_aMoveLeft  = new Animation("rcs/player/player_move_left.png",  width, height, 18, 4, true);
-	m_aMoveRight = new Animation("rcs/player/player_move_right.png", width, height, 18, 4, true);
+	m_aMoveBack  = new Animation(PLAYER_MOVING_BACK_POS,  width, height, 18, 4, true);
+	m_aMoveFront = new Animation(PLAYER_MOVING_FRONT_POS, width, height, 18, 4, true);
+	m_aMoveLeft  = new Animation(PLAYER_MOVING_LEFT_POS,  width, height, 18, 4, true);
+	m_aMoveRight = new Animation(PLAYER_MOVING_RIGHT_POS, width, height, 18, 4, true);
 
 	m_animation = m_aIdleFront;
 	Weapon = new Wand(x, y);

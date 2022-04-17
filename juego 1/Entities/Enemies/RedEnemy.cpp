@@ -5,8 +5,8 @@
 RedEnemy::RedEnemy(int x, int y)
 	: Enemy(RED_ENEMY_POS, x, y, Game::Get().CellSizeX, Game::Get().CellSizeY)
 {
-	m_aIdle = new Animation("rcs/enemies/enemy_red_idle.png", width, height, 18, 3, true);
-	m_aDying = new Animation("rcs/enemies/enemy_red_dying.png", width, height, 18, 3, false);
+	m_aIdle = new Animation(RED_ENEMY_IDLE_POS, width, height, 18, 3, true);
+	m_aDying = new Animation(RED_ENEMY_DEATH_POS, width, height, 18, 3, false);
 	m_animation = m_aIdle;
 	collisionDMG = 3;
 	Health = 1;

@@ -20,15 +20,13 @@ void Enemy::Draw(float scrollX)
 
 Weapon* Enemy::Drop()
 {
-	// drop rate is 15%
+	// drop rate is 20%
 	int rnd = Game::Get().randomInt(1, 100);
-	if (rnd <= 15) {
-		int w = Game::Get().randomInt(1, 2);
-		if (w == 1)
-			return new TripleWand(x, y);
-		else
-			return new Bow(x, y);
-
+	if (rnd <= 10) {
+		return new Bow(x, y);
+	}
+	if (rnd <= 20) {
+		return new TripleWand(x, y);
 	}
 	return nullptr;
 }

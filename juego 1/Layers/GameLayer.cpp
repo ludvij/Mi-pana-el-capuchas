@@ -253,21 +253,14 @@ void GameLayer::updateCollisions()
 			}
 		}
 	}
-
-	for (const auto& d : droppedWeapons) {
-		if (d->IsOverlap(player)) {
-			d->cadence = player->cadence;
-			d->damage = player->dmg;
-			player->Weapon = d;
-
-		}
-	}
 	auto itr = droppedWeapons.begin();
 	while (itr != droppedWeapons.end())
 	{
 		Weapon* ent = *itr;
 		if (player->IsOverlap(ent))
 		{
+			ent->cadence = player->cadence;
+			ent->damage = player->dmg;
 			player->Weapon = ent;
 			droppedWeapons.erase(itr++);	
 		}

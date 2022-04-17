@@ -5,8 +5,8 @@
 CyanVeteranEnemy::CyanVeteranEnemy(int x, int y)
 	: Enemy(VETERAN_ENEMY_POS, x, y, Game::Get().CellSizeX, Game::Get().CellSizeY)
 {
-	m_aIdle = new Animation("rcs/enemies/enemy_cyan_veteran_idle.png", width, height, 18, 3, true);
-	m_aDying = new Animation("rcs/enemies/enemy_cyan_veteran_dying.png", width, height, 18, 3, false);
+	m_aIdle = new Animation(VETERAN_ENEMY_IDLE_POS, width, height, 18, 3, true);
+	m_aDying = new Animation(VETERAN_ENEMY_DEATH_POS, width, height, 18, 3, false);
 	m_animation = m_aIdle;
 	Health = 3;
 	ShotTime = 90;

@@ -1,11 +1,12 @@
 #pragma once
 
 #include "Game.h"
+#include "SpriteSheet.h"
 
 class Animation
 {
 public:
-	Animation(std::string_view filename, int actorWidth, int actorHeight,
+	Animation(uint32_t sprite_x, uint32_t sprite_y, int actorWidth, int actorHeight,
 		int updateFrequence, int totalFrames, bool loop);
 	~Animation() {};
 
@@ -19,14 +20,9 @@ public:
 	int UpdateTime;
 
 private:
+	uint32_t m_startX;
 	int m_entityWidth;
 	int m_entityHeight;
-	int m_fileWidth;
-	int m_fileHeight;
-	SDL_Texture* m_texture;
-	int m_frameWidth;
-	int m_frameHeight;
-	SDL_Rect m_source;
-
+	SDL_Rect m_renderRect{};
 };
 
