@@ -6,7 +6,7 @@ class Projectile : public Entity
 {
 
 public:
-	Projectile(std::string_view filename, int x, int y, int width, int height, float angle, int pierce, Vector2D velocity, int dmg);
+	Projectile(uint32_t sprite_x, uint32_t sprite_y, int x, int y, int width, int height, float angle, int pierce, Vector2D velocity, int dmg);
 
 	virtual void Draw(float scrollX =0) override;
 	void Update();

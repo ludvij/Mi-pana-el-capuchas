@@ -2,7 +2,7 @@
 #include "Weapons/Wand.h"
 
 Player::Player(int x, int y)
-	: Entity("rcs/player/player.png", x, y, Game::Get().CellSizeX, Game::Get().CellSizeY),
+	: Entity(PLAYER_POS, x, y, Game::Get().CellSizeX, Game::Get().CellSizeY),
 	orientation(Orientation::NONE),
 	state(State::IDLE)
 {

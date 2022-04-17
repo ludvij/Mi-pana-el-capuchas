@@ -2,8 +2,8 @@
 #include "Player.h"
 #include "Layers/GameLayer.h"
 
-Projectile::Projectile(std::string_view filename, int x, int y, int width, int height, float angle, int pierce, Vector2D velocity, int dmg)
-	: Entity(filename, x, y, width, height),
+Projectile::Projectile(uint32_t sprite_x, uint32_t sprite_y, int x, int y, int width, int height, float angle, int pierce, Vector2D velocity, int dmg)
+	: Entity(sprite_x, sprite_y, x, y, width, height),
 	Pierce(pierce),
 	Angle(angle),
 	Dmg(dmg)
@@ -13,11 +13,6 @@ Projectile::Projectile(std::string_view filename, int x, int y, int width, int h
 
 void Projectile::Draw(float scrollX)
 {
-	SDL_Rect source;
-	source.x = 0;
-	source.y = 0;
-	source.w = m_texSize.x;
-	source.h = m_texSize.y;
 	// tamaño de la entidad
 	SDL_Rect destination;
 	destination.x = std::round(x - width / 2);
@@ -25,7 +20,7 @@ void Projectile::Draw(float scrollX)
 	destination.w = width;
 	destination.h = height;
 
-	SDL_RenderCopyEx(Game::Get().Renderer, m_texture, &source, &destination, Angle, nullptr, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(Game::Get().Renderer, m_texture, &m_renderRect, &destination, Angle, nullptr, SDL_FLIP_NONE);
 #ifdef OUTLINE
 	SDL_SetRenderDrawColor(Game::Get().Renderer, HEX_COLOR(0xffffffff));
 	SDL_RenderDrawRect(Game::Get().Renderer, &destination);

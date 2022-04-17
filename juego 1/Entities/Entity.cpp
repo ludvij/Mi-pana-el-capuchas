@@ -1,42 +1,58 @@
 #include "Entity.h"
 
 
-Entity::Entity(std::string_view filename, int x, int y, int width, int height)
+//Entity::Entity(std::string_view filename, int x, int y, int width, int height)
+//	: x(x), y(y), width(width), height(height)
+//{
+//	m_texture = Game::Get().GetTexture(filename);
+//	// get texture size
+//	SDL_QueryTexture(m_texture, nullptr, nullptr, &m_texSize.x, &m_texSize.y);
+//	// for comparation
+//	if(UuidCreate(&m_uuid) != RPC_S_OK) {
+//		LOG_ERROR("Error creating UUID");
+//	}
+//	Pierceable = true;
+//	
+//}
+
+Entity::Entity(uint32_t sprite_x, uint32_t sprite_y, int x, int y, int width, int height)
 	: x(x), y(y), width(width), height(height)
 {
-	m_texture = Game::Get().GetTexture(filename);
-	// get texture size
-	SDL_QueryTexture(m_texture, nullptr, nullptr, &m_texSize.x, &m_texSize.y);
+	m_texture = Game::Get().GetTexture("rcs/spritesheet.png");
+	
+	m_renderRect.w = SPRITE_SIZE_X;
+	m_renderRect.h = SPRITE_SIZE_Y;
+	m_renderRect.x = SPRITE_SIZE_X * sprite_x;
+	m_renderRect.y = SPRITE_SIZE_Y * sprite_y;
 	// for comparation
-	if(UuidCreate(&m_uuid) != RPC_S_OK) {
+	if (UuidCreate(&m_uuid) != RPC_S_OK) {
 		LOG_ERROR("Error creating UUID");
 	}
 	Pierceable = true;
-	
+
 }
 
 
 
+void Entity::ChangeRenderRect(uint32_t sprite_x, uint32_t sprite_y)
+{
+	m_renderRect.x = sprite_x;
+	m_renderRect.y = sprite_y;
+}
+
 void Entity::Draw(float scrollX)
 {
-	// tamaño de la textura
-	SDL_Rect source;
-	source.x = 0;
-	source.y = 0;
-	source.w = m_texSize.x;
-	source.h = m_texSize.y;
 	// tamaño de la entidad
 	SDL_Rect destination;
 	destination.x = std::round(x - width / 2.0f);
 	destination.y = std::round(y - height / 2.0f);
 	destination.w = width;
 	destination.h = height;
-	SDL_RenderCopyEx(Game::Get().Renderer, m_texture, &source, &destination, 0, nullptr, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(Game::Get().Renderer, m_texture, &m_renderRect, &destination, 0, nullptr, SDL_FLIP_NONE);
 #ifdef OUTLINE
 	SDL_SetRenderDrawColor(Game::Get().Renderer, HEX_COLOR(0xffffffff));
 	SDL_RenderDrawRect(Game::Get().Renderer, &destination);
 	SDL_SetRenderDrawColor(Game::Get().Renderer, HEX_COLOR(0));
-
 #endif // OUTLINE
 }
 

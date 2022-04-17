@@ -12,7 +12,7 @@ enum class WeaponType {
 class Weapon : public Entity
 {
 public:
-	Weapon(std::string_view filename, int x, int y, int width, int height);
+	Weapon(uint32_t sprite_x, uint32_t sprite_y, int x, int y, int width, int height);
 	~Weapon() {};
 
 	virtual std::list<Projectile*> Use() = 0;

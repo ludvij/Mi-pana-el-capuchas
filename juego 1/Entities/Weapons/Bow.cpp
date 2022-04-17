@@ -1,6 +1,6 @@
 #include "Bow.h"
 Bow::Bow(int x, int y)
-	: Weapon("rcs/player/weapons/weapon_bow.png", x, y, Game::Get().CellSizeX, Game::Get().CellSizeY)
+	: Weapon(BOW_POS, x, y, Game::Get().CellSizeX, Game::Get().CellSizeY)
 {
 	cadence = 30;
 	shotTime = 30;
@@ -18,7 +18,7 @@ std::list<Projectile*> Bow::Use()
 		float angle = Angle / 180.0f * static_cast<float>(M_PI);
 		Vector2D vel = { std::cosf(angle), std::sinf(angle)};
 		vel = -vel * projectileSpeed;
-		res.push_back(new Projectile("rcs/player/weapons/projectile_bow.png", x, y, width / 2,height / 2, Angle, 2, vel, damage));
+		res.push_back(new Projectile(ARROW_PROJECTILE_POS, x, y, width / 2,height / 2, Angle, 2, vel, damage));
 	}
 	return res;
 }

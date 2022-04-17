@@ -3,7 +3,7 @@
 #include "Entities/Player.h"
 
 CyanEnemy::CyanEnemy(int x, int y)
-	: Enemy("rcs/enemies/enemy_cyan.png", x, y, Game::Get().CellSizeX, Game::Get().CellSizeY)
+	: Enemy(CYAN_ENEMY_POS, x, y, Game::Get().CellSizeX, Game::Get().CellSizeY)
 {
 	m_aIdle = new Animation("rcs/enemies/enemy_cyan_idle.png", width, height, 18, 3, true);
 	m_aDying = new Animation("rcs/enemies/enemy_cyan_dying.png", width, height, 18, 3, false);
@@ -43,7 +43,7 @@ Projectile* CyanEnemy::Update()
 	// SHOT
 	if (ShotTime <= 0) {
 		ShotTime = 90;
-		auto p =  new Projectile("rcs/player/weapons/projectile_wand.png",
+		auto p =  new Projectile(BASIC_PROJECTILE_POS,
 			x, y, Game::Get().CellSizeX / 2, Game::Get().CellSizeY / 2, 0, 1, -dst / std::sqrtf(dst.DistanceSquared()) * 5, 1);
 		p->HarmPlayer = true;
 		return p;

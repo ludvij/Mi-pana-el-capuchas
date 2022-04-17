@@ -2,8 +2,8 @@
 #include "Entities/Weapons/TripleWand.h"
 #include "Entities/Weapons/Bow.h"
 
-Enemy::Enemy(std::string_view filename, int x, int y, int width, int height)
-	: Entity(filename, x, y, width, height)
+Enemy::Enemy(uint32_t sprite_x, uint32_t sprite_y, int x, int y, int width, int height)
+	: Entity(sprite_x, sprite_y, x, y, width, height)
 {
 }
 

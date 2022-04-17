@@ -7,32 +7,32 @@ PowerUpLayer::PowerUpLayer()
 		Game::Get().Height / 2,
 		Game::Get().Width,
 		Game::Get().Height),
-	frameCadence("rcs/frame.png",
+	frameCadence(FRAME_POS,
 		Game::Get().Width * 1 / 4.0f,
 		Game::Get().Height * 0.6f,
 		Game::Get().CellSizeX * 3,
 		Game::Get().CellSizeY * 3),
-	frameHealth("rcs/frame.png",
+	frameHealth(FRAME_POS,
 		Game::Get().Width * 2 / 4.0f,
 		Game::Get().Height * 0.6f,
 		Game::Get().CellSizeX * 3,
 		Game::Get().CellSizeY * 3),
-	frameDmg("rcs/frame.png",
+	frameDmg(FRAME_POS,
 		Game::Get().Width * 3 / 4.0f,
 		Game::Get().Height * 0.6f,
 		Game::Get().CellSizeX * 3,
 		Game::Get().CellSizeY * 3),
-	cadence("rcs/player/weapons/projectile_bow.png",
+	cadence(ARROW_PROJECTILE_POS,
 		Game::Get().Width * 1 / 4.0f,
 		Game::Get().Height * 0.6f,
 		Game::Get().CellSizeX * 3,
 		Game::Get().CellSizeY * 3),
-	health("rcs/heart.png",
+	health(HEART_POS,
 		Game::Get().Width * 2 / 4.0f,
 		Game::Get().Height * 0.6f,
 		Game::Get().CellSizeX * 3,
 		Game::Get().CellSizeY * 3),
-	damage("rcs/player/weapons/weapon_sword.png",
+	damage(SWORD_POS,
 		Game::Get().Width * 3 / 4.0f,
 		Game::Get().Height * 0.6f,
 		Game::Get().CellSizeX * 3,
@@ -96,17 +96,18 @@ void PowerUpLayer::ProcessControls(SDL_Event event)
 	if (Game::Get().Input == Input::KEYBOARD) {
 		keysToControls(event);
 	}
-	frameCadence.m_texture = Game::Get().GetTexture("rcs/frame.png");
-	frameHealth.m_texture = Game::Get().GetTexture("rcs/frame.png");
-	frameDmg.m_texture = Game::Get().GetTexture("rcs/frame.png");
+	frameCadence.ChangeRenderRect(FRAME_POS);
+	frameHealth.ChangeRenderRect(FRAME_POS);
+	frameDmg.ChangeRenderRect(FRAME_POS);
+
 	if (pos == 0) {
-		frameCadence.m_texture = Game::Get().GetTexture("rcs/selected_frame.png");
+		frameCadence.ChangeRenderRect(SELECTED_FRAME_POS);
 	}
 	else if (pos == 1) {
-		frameHealth.m_texture = Game::Get().GetTexture("rcs/selected_frame.png");
+		frameHealth.ChangeRenderRect(SELECTED_FRAME_POS);
 	}
 	else if (pos == 2) {
-		frameDmg.m_texture = Game::Get().GetTexture("rcs/selected_frame.png");
+		frameDmg.ChangeRenderRect(SELECTED_FRAME_POS);
 	}
 
 	if (controlContinue) {

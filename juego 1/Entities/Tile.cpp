@@ -1,8 +1,8 @@
 #include "Tile.h"
 
 
-Tile::Tile(std::string filename, int x, int y)
-	: Entity(filename, x, y, Game::Get().CellSizeX, Game::Get().CellSizeY)
+Tile::Tile(uint32_t sprite_x, uint32_t sprite_y, int x, int y)
+	: Entity(sprite_x, sprite_y, x, y, Game::Get().CellSizeX, Game::Get().CellSizeY)
 {
 	Pierceable = false;
 }

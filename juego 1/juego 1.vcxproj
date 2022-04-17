@@ -195,6 +195,7 @@
     <ClInclude Include="Entities\Weapons\TripleWand.h" />
     <ClInclude Include="Entities\Enemies\RedEnemy.h" />
     <ClInclude Include="Layers\PowerUpLayer.h" />
+    <ClInclude Include="Entities\Sprite_pos.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Layers\EndLayer.cpp" />

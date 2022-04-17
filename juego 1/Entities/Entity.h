@@ -4,15 +4,19 @@
 #include <rpc.h>
 #include <string>
 #include "Game.h"
-
+#include "Sprite_pos.h"
 
 class Entity 
 {
 public:
 
-	Entity(std::string_view filename, int x, int y, int width, int height);
+	//Entity(std::string_view filename, int x, int y, int width, int height);
+
+	Entity(uint32_t sprite_x, uint32_t sprite_y, int x, int y, int width, int height);
 
 	virtual ~Entity() {};
+
+	void ChangeRenderRect(uint32_t sprite_x, uint32_t sprite_y);
 
 	virtual void Draw(float ScrollX = 0);
 
@@ -39,12 +43,14 @@ public:
 
 	bool Deleted = false;
 
-	//texture size
-	SDL_Point m_texSize = { 0,0 };
 
 	SDL_Texture* m_texture = nullptr;
 
+protected:
+	SDL_Rect m_renderRect;
+
 private:
+
 	UUID m_uuid;
 
 };

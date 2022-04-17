@@ -7,7 +7,7 @@
 class Enemy : public Entity
 {
 public:
-	Enemy(std::string_view filename, int x, int y, int width, int height);
+	Enemy(uint32_t sprite_x, uint32_t sprite_y, int x, int y, int width, int height);
 	~Enemy();
 
 	virtual void Draw(float scrollX = 0) override;

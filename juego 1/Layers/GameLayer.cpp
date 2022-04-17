@@ -3,6 +3,8 @@
 #include "Entities/Enemies/CyanEnemy.h"
 #include "Entities/Enemies/CyanVeteranEnemy.h"
 
+#include "Entities/Sprite_pos.h"
+
 #include <algorithm>
 #include <fstream>
 #include <sstream>
@@ -470,7 +472,7 @@ void GameLayer::loadMapObj(char character, int x, int y)
 	switch (character) {
 
 	case 'B': {
-		auto tile = new Tile("rcs/tiles/tile_bricks.png", x, y);
+		auto tile = new Tile(BRICK_TILE_POS, x, y);
 		// modificaci�n para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
@@ -490,9 +492,26 @@ void GameLayer::loadMapObj(char character, int x, int y)
 		[[fallthrough]];
 	}
 	case '.': {
-		int tex = Game::Get().randomInt(1, 4);
-		std::string grass = "rcs/tiles/tile_grass" + std::to_string(tex) + ".png";
-		auto tile = new Tile(grass, x, y);
+		Tile* tile = nullptr;
+		// ugly I now, i'll change it, maybe
+		switch (Game::Get().randomInt(1, 4))
+		{
+		case 1:
+			tile = new Tile(GRASS_TILE_1_POS, x, y);
+			break;
+		case 2:
+			tile = new Tile(GRASS_TILE_2_POS, x, y);
+			break;
+		case 3:
+			tile = new Tile(GRASS_TILE_3_POS, x, y);
+			break;
+		case 4:
+			tile = new Tile(GRASS_TILE_4_POS, x, y);
+			break;
+		default:
+			tile = new Tile(GRASS_TILE_1_POS, x, y);
+			break;
+		}
 		tile->y = tile->y - tile->height / 2;
 		tilesBG.push_back(tile);
 	}

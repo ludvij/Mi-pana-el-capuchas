@@ -3,7 +3,7 @@
 #include "Layers/GameLayer.h"
 
 RedEnemy::RedEnemy(int x, int y)
-	: Enemy("rcs/enemies/enemy_red.png", x, y, Game::Get().CellSizeX, Game::Get().CellSizeY)
+	: Enemy(RED_ENEMY_POS, x, y, Game::Get().CellSizeX, Game::Get().CellSizeY)
 {
 	m_aIdle = new Animation("rcs/enemies/enemy_red_idle.png", width, height, 18, 3, true);
 	m_aDying = new Animation("rcs/enemies/enemy_red_dying.png", width, height, 18, 3, false);
