@@ -44,8 +44,8 @@ void Entity::Draw(float scrollX)
 {
 	// tamaño de la entidad
 	SDL_Rect destination;
-	destination.x = std::round(x - width / 2.0f);
-	destination.y = std::round(y - height / 2.0f);
+	destination.x = static_cast<int>(std::round(static_cast<float>(x - width) / 2.0f));
+	destination.y = static_cast<int>(std::round(static_cast<float>(y - height) / 2.0f));
 	destination.w = width;
 	destination.h = height;
 	SDL_RenderCopyEx(Game::Get().Renderer, m_texture, &m_renderRect, &destination, 0, nullptr, SDL_FLIP_NONE);
