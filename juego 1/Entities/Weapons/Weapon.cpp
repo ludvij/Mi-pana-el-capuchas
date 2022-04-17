@@ -18,12 +18,12 @@ void Weapon::Draw(float scrollX)
 {
 	// tamaño de la entidad
 	SDL_Rect destination;
-	destination.x = std::round(x - width / 2);
-	destination.y = std::round(y - height / 2);
+	destination.x = std::round(x - width / 2.0f);
+	destination.y = std::round(y - height / 2.0f);
 	destination.w = width;
 	destination.h = height;
 
-	SDL_RenderCopyEx(Game::Get().Renderer, m_texture, &m_renderRect, &destination, Angle, nullptr, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(Game::Get().Renderer, Game::Get().Sheet, &m_renderRect, &destination, Angle, nullptr, SDL_FLIP_NONE);
 #ifdef OUTLINE
 	SDL_SetRenderDrawColor(Game::Get().Renderer, HEX_COLOR(0xffffffff));
 	SDL_RenderDrawRect(Game::Get().Renderer, &destination);
@@ -41,5 +41,5 @@ void Weapon::Draw(float x, float y)
 	destination.w = width;
 	destination.h = height;
 
-	SDL_RenderCopyEx(Game::Get().Renderer, m_texture, &m_renderRect, &destination, 0, nullptr, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(Game::Get().Renderer, Game::Get().Sheet, &m_renderRect, &destination, 0, nullptr, SDL_FLIP_NONE);
 }

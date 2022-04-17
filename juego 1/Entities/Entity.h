@@ -4,13 +4,13 @@
 #include <rpc.h>
 #include <string>
 #include "Game.h"
-#include "Sprite_pos.h"
+#include "SpriteSheet.h"
 
 class Entity 
 {
 public:
 
-	//Entity(std::string_view filename, int x, int y, int width, int height);
+	Entity(std::string_view filename, int x, int y, int width, int height);
 
 	Entity(uint32_t sprite_x, uint32_t sprite_y, int x, int y, int width, int height);
 
@@ -50,6 +50,9 @@ protected:
 	SDL_Rect m_renderRect;
 
 private:
+
+	SDL_Point m_texSize;
+	bool m_file = false;
 
 	UUID m_uuid;
 

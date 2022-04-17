@@ -68,6 +68,7 @@ Game::Game()
 	intersectionLayer = new PowerUpLayer();
 
 	layer = gameLayer;
+	Sheet = GetTexture("rcs/spritesheet.png");
 }
 
 void Game::processGameEvents()

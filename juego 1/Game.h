@@ -118,6 +118,9 @@ public:
 	Layer* endLayer = nullptr;
 	Layer* menuLayer = nullptr;
 	Layer* intersectionLayer = nullptr;
+
+	SDL_Texture* Sheet;
+
 private:
 
 	Game();

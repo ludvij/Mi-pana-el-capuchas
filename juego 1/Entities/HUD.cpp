@@ -13,8 +13,8 @@ HUD::HUD()
 			Game::Get().Width * 0.02f + i * Game::Get().CellSizeX / 2, 
 			Game::Get().Height * 0.02f,
 			Game::Get().CellSizeX,
-			Game::Get().CellSizeY
-		));
+			Game::Get().CellSizeY)
+		);
 	}
 }
 

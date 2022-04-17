@@ -1,29 +1,27 @@
 #include "Entity.h"
 
-
-//Entity::Entity(std::string_view filename, int x, int y, int width, int height)
-//	: x(x), y(y), width(width), height(height)
-//{
-//	m_texture = Game::Get().GetTexture(filename);
-//	// get texture size
-//	SDL_QueryTexture(m_texture, nullptr, nullptr, &m_texSize.x, &m_texSize.y);
-//	// for comparation
-//	if(UuidCreate(&m_uuid) != RPC_S_OK) {
-//		LOG_ERROR("Error creating UUID");
-//	}
-//	Pierceable = true;
-//	
-//}
+Entity::Entity(std::string_view filename, int x, int y, int width, int height)
+	: x(x), y(y), width(width), height(height)
+{
+	m_texture = Game::Get().GetTexture(filename);
+	// get texture size
+	SDL_QueryTexture(m_texture, nullptr, nullptr, &m_texSize.x, &m_texSize.y);
+	m_file = true;
+	// for comparation
+	if(UuidCreate(&m_uuid) != RPC_S_OK) {
+		LOG_ERROR("Error creating UUID");
+	}
+	Pierceable = true;
+	
+}
 
 Entity::Entity(uint32_t sprite_x, uint32_t sprite_y, int x, int y, int width, int height)
 	: x(x), y(y), width(width), height(height)
 {
-	m_texture = Game::Get().GetTexture("rcs/spritesheet.png");
-	
+	m_renderRect.x =  sprite_x * SPRITE_SIZE_X;
+	m_renderRect.y =  sprite_y * SPRITE_SIZE_Y;
 	m_renderRect.w = SPRITE_SIZE_X;
 	m_renderRect.h = SPRITE_SIZE_Y;
-	m_renderRect.x = SPRITE_SIZE_X * sprite_x;
-	m_renderRect.y = SPRITE_SIZE_Y * sprite_y;
 	// for comparation
 	if (UuidCreate(&m_uuid) != RPC_S_OK) {
 		LOG_ERROR("Error creating UUID");
@@ -36,19 +34,31 @@ Entity::Entity(uint32_t sprite_x, uint32_t sprite_y, int x, int y, int width, in
 
 void Entity::ChangeRenderRect(uint32_t sprite_x, uint32_t sprite_y)
 {
-	m_renderRect.x = sprite_x;
-	m_renderRect.y = sprite_y;
+	m_renderRect.x = SPRITE_SIZE_X * sprite_x;
+	m_renderRect.y = SPRITE_SIZE_Y * sprite_y;
 }
 
 void Entity::Draw(float scrollX)
 {
 	// tamaño de la entidad
 	SDL_Rect destination;
-	destination.x = static_cast<int>(std::round(static_cast<float>(x - width) / 2.0f));
-	destination.y = static_cast<int>(std::round(static_cast<float>(y - height) / 2.0f));
+	destination.x = std::round(x - width / 2);
+	destination.y = std::round(y - height / 2);
 	destination.w = width;
 	destination.h = height;
-	SDL_RenderCopyEx(Game::Get().Renderer, m_texture, &m_renderRect, &destination, 0, nullptr, SDL_FLIP_NONE);
+	if (!m_file) {
+		SDL_RenderCopyEx(Game::Get().Renderer, Game::Get().Sheet, &m_renderRect, &destination, 0, nullptr, SDL_FLIP_NONE);
+	}
+	else {
+		SDL_Rect source = {
+			.x = 0,
+			.y = 0,
+			.w = m_texSize.x,
+			.h = m_texSize.y
+		};
+		SDL_RenderCopyEx(Game::Get().Renderer, m_texture, &source, &destination, 0, nullptr, SDL_FLIP_NONE);
+	}
+
 #ifdef OUTLINE
 	SDL_SetRenderDrawColor(Game::Get().Renderer, HEX_COLOR(0xffffffff));
 	SDL_RenderDrawRect(Game::Get().Renderer, &destination);

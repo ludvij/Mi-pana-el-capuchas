@@ -3,7 +3,7 @@
 #include "Entities/Enemies/CyanEnemy.h"
 #include "Entities/Enemies/CyanVeteranEnemy.h"
 
-#include "Entities/Sprite_pos.h"
+#include "Entities/SpriteSheet.h"
 
 #include <algorithm>
 #include <fstream>
